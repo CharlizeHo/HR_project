@@ -39,7 +39,7 @@ function Navbar({ isOpen = false, setOpen = () => {} }) {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/profile">
+              <Dropdown.Item href="/profile">
                 <span className="btn-left">
                   <i className="fa-solid fa-pen"></i>
                   <p className="dropdown-text">Thông tin cá nhân</p>
