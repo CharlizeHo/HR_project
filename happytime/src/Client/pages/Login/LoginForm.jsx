@@ -25,7 +25,7 @@ const LoginForm = () => {
         style={{ backgroundColor: "#f5f5f5" }}
       >
         <div className="container">
-          <div className="row align-items-center">
+          <div className="row align-items-center text-center">
             {/* Left */}
             <div className="col-lg-6 mb-5">
               <h1 className="my-5 mr-4 display-2">
@@ -36,7 +36,7 @@ const LoginForm = () => {
                   <br /> tốt nhất
                 </span>
               </h1>
-              <p style={{ width: "500px", color: "#757f8e" }}>
+              <p style={{color: "#757f8e" }}>
                 @2023 VTI_HappyTime. Một sản phẩm của team VTI.
               </p>
             </div>

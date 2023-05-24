@@ -19,15 +19,15 @@ const Sidebar = ({ isOpen }) => {
       name: "Bảng công ",
       icon: <i className="fa-solid fa-bars-progress"></i>,
     },
-    {
-      path: "/quanLyNhanSu",
-      name: "Quản lý nhân sự",
-      icon: <i className="fa-solid fa-user-group"></i>,
-    },
+    // {
+    //   path: "/quanLyNhanSu",
+    //   name: "Quản lý nhân sự",
+    //   icon: <i className="fa-solid fa-user-group"></i>,
+    // },
   ];
   return (
     <div>
-      <div className="sidebar" style={{ width: isOpen ? "200px" : "80px" }}>
+      <div className="sidebar" style={{ width: isOpen ? "200px" : "80px", marginTop: "-2px" }}>
         {menuItem.map((item, index) => {
           return (
             <NavLink to={item.path} key={index} className="icon-link">

@@ -27,7 +27,7 @@ const PreviewTasks = () => {
       <span style={{ fontWeight: "600", marginRight: "25px" }}>
         Top Nhân Viên
       </span>
-      <Form.Select>
+      <Form.Select style={{maxWidth: "50%"}}>
         <option>Phòng ban</option>
         <option value="1">Sales</option>
         <option value="2">IT</option>
