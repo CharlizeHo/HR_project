@@ -1,0 +1,131 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  z-index: 2;
+  justify-content: space-between;
+  background-color: white;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))
+    drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+}
+
+.nav-items-left {
+  display: flex;
+  gap: 26px;
+}
+
+.menu-trigger {
+  border: white;
+  color: orange;
+  background-color: transparent;
+  border-radius: 0.5rem;
+}
+
+/* Left Items */
+.menu-trigger i {
+  padding: 10px;
+}
+
+.menu-trigger:hover,
+.menu-trigger:focus {
+  cursor: pointer;
+  background-color: rgb(253, 227, 180);
+  border: transparent;
+}
+
+#logo {
+  width: 90px;
+  height: fit-content;
+  box-sizing: border-box;
+}
+
+/* Right Items */
+.nav-items-right {
+  margin-right: 1rem;
+  display: flex;
+  gap: 0.65rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  border: transparent;
+}
+
+.btn-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.user-icon i,
+.arrow-rotate-icon i {
+  padding: 0.6rem;
+  color: orange;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 237 213 / var(--tw-bg-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(254 215 170 / var(--tw-border-opacity));
+}
+
+.btn-3 {
+  padding: 0px;
+  border: 0px;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.grid-icon i,
+.noti-icon i {
+  padding: 1rem;
+  color: gray;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 240 240 / var(--tw-bg-opacity));
+}
+
+.btn-text-wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.btn-bold-text {
+  font-weight: 700px;
+}
+.btn-text-wrap p {
+  margin: auto 0;
+  font-size: 0.6rem;
+}
+
+#dropdown-basic {
+  text-align: left;
+  padding: 0.4rem 1.8rem;
+  color: black;
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 240 240 / var(--tw-bg-opacity));
+}
+
+.btn-4 {
+  margin-left: -1rem;
+  padding-right: 1.5rem;
+}
+
+.btn:hover,
+.grid-icon:hover,
+.noti-icon:hover,
+#dropdown-basic:hover {
+  cursor: pointer;
+  background-color: rgba(255, 235, 205, 0.579);
+}
+
+.dropdown-text {
+  margin-top: 10px;
+  padding-top: 2px;
+}
+
+

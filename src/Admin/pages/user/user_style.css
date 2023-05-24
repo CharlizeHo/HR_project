@@ -1,0 +1,19 @@
+.container{
+    margin-top: 20px;
+    display:block;
+}
+
+h2 {
+    color: orange;
+text-align: center;
+}
+
+.btn-add{
+    border: orange solid !important;
+    background-color: orange !important;
+}
+
+.btn-add:hover{
+    background-color: rgb(253, 175, 30) !important;
+    border-color: rgb(253, 175, 30) !important;
+}
