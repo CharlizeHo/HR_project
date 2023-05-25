@@ -13,7 +13,7 @@ export default () => {
           <Sidebar className="container" isOpen={isOpen} />
           <div
             className="main-content"
-            style={{ marginLeft: isOpen ? "200px" : "80px" }}
+            // style={{ width: isOpen ? "80%" : "100%" }}
           >
             <Outlet />
           </div>

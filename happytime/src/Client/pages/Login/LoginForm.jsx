@@ -19,29 +19,28 @@ const LoginForm = () => {
     setErrors(Validation(values));
   };
   return (
-    <section className="vh-100">
+    <section className="vh-100" style={{ backgroundColor: "#f5f5f5" }}>
       <div
-        className="vh-100 px-4 px-md-5 text-center text-lg-start"
-        style={{ backgroundColor: "#f5f5f5" }}
+        className="px-4 px-md-5 text-center text-lg-start"
+        style={{ marginTop: "-20px" }}
       >
         <div className="container">
           <div className="row align-items-center">
             {/* Left */}
             <div className="col-lg-6 mb-5">
-              <h1 className="my-5 mr-4 display-2">
+              <h1 className="my-5 mr-4 display-3 lh-base">
                 Nền tảng quản lý
                 <br />
-                <span style={{ color: "orange" }}>
-                  nhân sự
-                  <br /> tốt nhất
-                </span>
+                <span style={{ color: "orange" }}>Nhân Sự Tốt Nhất</span>
+                <br />
+                cho Doanh Nghiệp
               </h1>
-              <p style={{ width: "500px", color: "#757f8e" }}>
+              <p className="mx-auto" style={{ color: "#757f8e" }}>
                 @2023 VTI_HappyTime. Một sản phẩm của team VTI.
               </p>
             </div>
             {/* Right */}
-            <div className="card col-lg-6 my-5 mb-5">
+            <div className="card col-lg-6 my-lg-5 mb-5 text-center">
               <div className="card-body p-5 p-lg-7 text-black">
                 <div>
                   <img className="w-50" id="logo" src={logo} alt="logo" />
@@ -87,7 +86,7 @@ const LoginForm = () => {
                       </button>
                     </a>
 
-                    <Link className="small text-muted " to="#!">
+                    <Link className="small text-muted mt-5" to="#!">
                       Quên Mật Khẩu?
                     </Link>
                   </form>
