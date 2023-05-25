@@ -25,7 +25,7 @@ const LoginForm = () => {
         style={{ marginTop: "-20px" }}
       >
         <div className="container">
-          <div className="row align-items-center">
+          <div className="row align-items-center text-center">
             {/* Left */}
             <div className="col-lg-6 mb-5">
               <h1 className="my-5 mr-4 display-3 lh-base">

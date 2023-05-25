@@ -19,6 +19,7 @@
   gap: 1rem;
   color: rgb(102, 102, 102);
   background-color: white;
+  text-decoration: none;
 }
 
 .icon-link:hover {
