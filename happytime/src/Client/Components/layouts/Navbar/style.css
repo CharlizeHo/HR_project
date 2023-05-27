@@ -73,7 +73,7 @@
   border-color: rgb(254 215 170 / var(--tw-border-opacity));
 }
 
-.btn-3 {
+.btn-1 {
   padding: 0px;
   border: 0px;
   border-color: transparent;
@@ -111,9 +111,8 @@
   background-color: rgb(240 240 240 / var(--tw-bg-opacity));
 }
 
-.btn-4 {
-  margin-left: -1rem;
-  padding-right: 1.5rem;
+.btn-2 {
+  margin-left: -1.5rem;
 }
 
 .btn:hover,
@@ -128,5 +127,3 @@
   margin-top: 10px;
   padding-top: 2px;
 }
-
-

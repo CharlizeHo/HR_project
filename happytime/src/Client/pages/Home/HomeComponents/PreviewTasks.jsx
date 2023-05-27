@@ -23,25 +23,22 @@ const PreviewTasks = () => {
     },
   ];
   return (
-    <div className="task-container">
-      <span style={{ fontWeight: "600", marginRight: "25px" }}>
-        Top Nhân Viên
-      </span>
-      <Form.Select style={{maxWidth: "50%"}}>
+    <div className="task-container mt-md-2 mt-lg-0">
+      <span style={{ fontWeight: "600" }}>Top Nhân Viên</span>
+      <Form.Select className="w-50 p-1 mt-2">
         <option>Phòng ban</option>
         <option value="1">Sales</option>
         <option value="2">IT</option>
         <option value="3">HR</option>
       </Form.Select>
-      
-      <div style={{ height: 350, width: 580, marginTop: "10px" }}>
+
+      <div style={{ height: 350, marginTop: "10px" }}>
         <DataGrid
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           rows={mockDataTeam}
           columns={columns}
-          width={580}
         />
       </div>
     </div>

@@ -14,20 +14,20 @@ const Sidebar = ({ isOpen }) => {
       name: "Danh sách công việc",
       icon: <i className="fa-solid fa-list-ul"></i>,
     },
-    {
-      path: "/bangCong",
-      name: "Bảng công ",
-      icon: <i className="fa-solid fa-bars-progress"></i>,
-    },
     // {
-    //   path: "/quanLyNhanSu",
-    //   name: "Quản lý nhân sự",
-    //   icon: <i className="fa-solid fa-user-group"></i>,
+    //   path: "/bangCong",
+    //   name: "Bảng công ",
+    //   icon: <i className="fa-solid fa-bars-progress"></i>,
     // },
-  ];
+       {
+      path: "/nhanvien",
+      name: "Danh sách nhân viên",
+      icon: <i className="fa-solid fa-user-group"></i>,
+    },
+     ];
   return (
     <div>
-      <div className="sidebar" style={{ width: isOpen ? "200px" : "80px", marginTop: "-2px" }}>
+      <div className="sidebar min-vh-100" style={{ width: isOpen ? "200px" : "80px", marginTop: "-2px" }}>
         {menuItem.map((item, index) => {
           return (
             <NavLink to={item.path} key={index} className="icon-link">

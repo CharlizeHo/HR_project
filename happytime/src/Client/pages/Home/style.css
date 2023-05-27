@@ -9,12 +9,14 @@ h4 {
   margin-bottom: 5px;
 }
 
-.section-2 {
+.section-table {
   display: block;
+  box-sizing: content-box;
+  overflow-x: scroll;
 }
 
 @media (min-width: 720px) {
-  .section-2 {
+  .section-table {
     display: flex;
     gap: 20px;
   }

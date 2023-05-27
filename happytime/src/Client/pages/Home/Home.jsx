@@ -14,10 +14,10 @@ const Home = () => {
           <h4>Hôm nay</h4>
         </span>
         <section>
-          <div className="section-1">
+          <div className="section-banner">
             <FirstBanner />
           </div>
-          <div className="section-2">
+          <div className="section-table">
             <StatTable className="section-2-left" />
             <PreviewTasks className="section-2-right" />
           </div>
