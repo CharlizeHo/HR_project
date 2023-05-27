@@ -1,6 +1,7 @@
-import { useState } from "react";import "style.css";
+import { useState } from "react";
+import "./style.css";
 
-function Profile() {
+const Profile = () => {
     const [avatarUrl, setAvatarUrl] = useState("https://via.placeholder.com/150x150");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");

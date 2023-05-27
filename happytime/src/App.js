@@ -7,8 +7,8 @@ import NotFound from "./Client/pages/NotFound/NotFound";
 import Layout from "./Client/Components/layouts/layout";
 import LoginForm from "./Client/pages/Login/LoginForm";
 import "./App.css";
-import TaskAssigned from "./Client/pages/ListTask/AssignTask";
-import Profile from"./Client/pages/Profile/Profile";
+// import TaskAssigned from "./Client/pages/ListTask/AssignTask";
+import Profile from "./Client/pages/Profile/Profile";
 
 import Department from "./Admin/pages/department/Department";
 import Customer from "./Admin/pages/customer/Customer";
@@ -24,7 +24,7 @@ import EditUser from "./Admin/controller/user/EditUser";
 import Task from "./Admin/pages/task/task";
 import AddTask from "./Admin/controller/task/AddTask";
 import ListNhanVien from "./Client/pages/HRM/ListNhanVien";
-import Profile from "./Client/pages/Profile/Profile";
+
 const MenuCtx = React.createContext({
   isNavOpen: true,
 });
@@ -56,10 +56,10 @@ class App extends React.Component {
                 <Route path="/profile" index element={<Profile />} />
                 <Route path="/nhanvien" element={<ListNhanVien />} />
                 <Route path="/ListTask" element={<ListTask />} />
-                <Route
+                {/* <Route
                   path="/ListTask/task-assignments"
                   element={<TaskAssigned />}
-                />
+                /> */}
                 <Route path="/profile" element={<Profile />} />
               </Route>
 

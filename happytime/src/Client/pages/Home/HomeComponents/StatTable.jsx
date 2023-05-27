@@ -19,10 +19,8 @@ const StatTable = () => {
   };
   return (
     <div className="stat-container">
-      <span style={{ fontWeight: "600", marginRight: "25px" }}>
-        Bảng thống kê
-      </span>
-      <div className="d-flex">
+      <span style={{ fontWeight: "600" }}>Bảng thống kê</span>
+      <div className="d-flex mt-2">
         <Form.Select className="w-50 p-1">
           <option>Phòng ban</option>
           <option value="1">Sales</option>
@@ -35,7 +33,7 @@ const StatTable = () => {
           style={{ marginLeft: "10px" }}
         />
       </div>
-      <div style={{ maxWidth: 600, marginTop: "10px" }}>
+      <div className="ml-lg-4" style={{ maxWidth: 600, marginTop: "10px" }}>
         <Chart
           chartType="LineChart"
           maxWidth="600px"
