@@ -64,6 +64,7 @@ export default function User() {
         <thead>
           <tr>
             <th scope="col">ID</th>
+            <th scope='col'>Tên đăng nhập</th>
             <th scope="col">Họ và tên</th>
             <th scope="col">Ngày sinh</th>
             <th scope="col">Giới tính</th>
@@ -81,6 +82,7 @@ export default function User() {
             <tr key={user.user_id}>
               <td>{user?.user_id}</td>
               <td>{user?.username}</td>
+              <td>{user?.user_fullName}</td>
               <td>{user?.user_birthdate}</td>
               <td>{user?.user_gender}</td>
               <td>{user?.user_address}</td>

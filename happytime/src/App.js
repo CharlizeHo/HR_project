@@ -26,6 +26,7 @@ import AddUser from './Admin/controller/user/AddUser';
 import EditUser from './Admin/controller/user/EditUser';
 import Task from './Admin/pages/task/task';
 import AddTask from './Admin/controller/task/AddTask';
+import EditTask from './Admin/controller/task/EditTask';
 const MenuCtx = React.createContext({
   isNavOpen: true,
 });
@@ -79,6 +80,8 @@ class App extends React.Component {
                 <Route exact path="/admin/user/edituser/:id" element={<EditUser />} />
                 <Route exact path="/admin/task" element={<Task />} />
                 <Route exact path="/admin/task/add" element={<AddTask />} />
+                <Route exact path="/admin/task/edittask/:id" element={<EditTask />} />
+                
               </Route>
             </Routes>
           </MenuCtx.Provider>

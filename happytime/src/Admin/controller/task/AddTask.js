@@ -2,9 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 
-export default function AddUser() {
+export default function AddTask() {
     const [customers, setCustomers] = useState(null)
-    // const [showPassword, setShowPassword] = useState(false);
+
+    const [users, setUsers] = useState(null)
+
+    useEffect(() => {
+        GetUser();
+    }, []);
+
+    const GetUser = async () => {
+        const result = await axios.get("http://localhost:8080/api/v1/auth/UserCol/getUser");
+        setUsers(result.data);
+    };
 
     useEffect(() => {
         GetCustomer();
@@ -15,11 +25,6 @@ export default function AddUser() {
         setCustomers(result.data);
     }
 
-    // const toggleShowPassword = () => {
-    //     setShowPassword(!showPassword);
-    // };
-
-
     let navigate = useNavigate();
 
     const [task, setTask] = useState({
@@ -29,25 +34,21 @@ export default function AddUser() {
         task_end: "",
         extension_time: "",
         someoneDidIt: false,
-        task_cre_person: 1,
+        user_creTask: {
+            user_id: 0
+        },
         customer: {
             customer_id: "",
             customerName: ""
         },
     });
 
-    const { task_name, task_description, task_start, task_end, extension_time, someoneDidIt, task_cre_person, customer } = task;
+    const { task_name, task_description, task_start, task_end, extension_time, someoneDidIt, user_creTask, customer } = task;
 
-    // const [validEmail, setValidEmail] = useState(true);
-
-    // const validateEmail = (email) => {
-    //     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    //     return emailPattern.test(email);
-    // };
 
     const onInputChange = (e) => {
         if (e.target.name === "customer_id") {
-            const selectedCustomer = customer.find(
+            const selectedCustomer = customers.find(
                 (customer) => customer.customer_id === parseInt(e.target.value)
             );
             setTask({
@@ -57,22 +58,26 @@ export default function AddUser() {
                     customerName: selectedCustomer.customerName,
                 },
             });
+        } else if (e.target.name === "user_id") {
+            const selectedUser = users.find(
+                (user) => user.user_id === parseInt(e.target.value)
+            );
+            setTask({
+                ...task,
+                user_creTask: {
+                    user_id: parseInt(e.target.value),
+                    user_fullName: selectedUser.user_fullName
+                },
+            });
         } else {
             setTask({ ...task, [e.target.name]: e.target.value });
         }
 
-        // if (e.target.name === 'email') {
-        //     const isValidEmail = validateEmail(e.target.value);
-        //     setValidEmail(isValidEmail);
-        // }
     };
 
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        // if (!validateEmail(email)) {
-        //     setValidEmail(false)
-        // } else {
         try {
             await axios.post("http://localhost:8080/Task/add", task);
             navigate("/admin/task");
@@ -83,7 +88,7 @@ export default function AddUser() {
                 alert('An error occurred. Please try again.');
             }
         }
-        // }
+
     };
     return (
         <div className="container">
@@ -94,111 +99,30 @@ export default function AddUser() {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">
-                                        Tên:
+                                    <label htmlFor="task_name" className="form-label">
+                                        Tên công việc:
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control text-center"
-                                        placeholder="Ví dụ: Nguyễn Võ Hoàng"
-                                        name="userName"
+                                        placeholder="Ví dụ: Make website"
+                                        name="task_name"
                                         value={task_name}
                                         onChange={(e) => onInputChange(e)}
                                         required
                                     />
                                 </div>
-
-
-
-                                <div className="mb-3">
-                                    <label htmlFor="birthdate" className="form-label">
-                                        Ngày bắt đầu:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        className="form-control text-center"
-                                        name="task_start"
-                                        value={task_start}
-                                        onChange={(e) => onInputChange(e)}
-                                        required
-                                    />
-                                </div>
-
-                                {/* <div className="mb-3">
-                  <label htmlFor="gender" className="form-label">
-                    Giới tính:
-                  </label>
-                  <select
-                    className="form-control text-center"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => onInputChange(e)}
-                    required
-                  >
-                    <option>Chọn giới tính</option>
-                    <option value="1">Nam</option>
-                    <option value="2">Nữ</option>
-                    <option value="3">Khác</option>
-                  </select>
-                </div> */}
-                                <div className="mb-3">
-                                    <label htmlFor="birthdate" className="form-label">
-                                        Deadline:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        className="form-control text-center"
-                                        name="task_end"
-                                        value={task_end}
-                                        onChange={(e) => onInputChange(e)}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="mb-3">
-                                    <label htmlFor="birthdate" className="form-label">
-                                        Kéo dài thời hạn:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        className="form-control text-center"
-                                        name="extension_time"
-                                        value={extension_time}
-                                        onChange={(e) => onInputChange(e)}
-                                        required
-                                    />
-                                </div>
-
-                                {/* <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        Email:
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className={`form-control text-center ${validEmail ? "" : "is-invalid"
-                                            }`}
-                                        placeholder="Ví dụ: hr@gmail.com"
-                                        name="email"
-                                        value={email}
-                                        onChange={(e) => onInputChange(e)}
-                                        required
-                                    />
-                                    {!validEmail && (
-                                        <div className="invalid-feedback">
-                                            Please enter a valid email address.
-                                        </div>
-                                    )}
-                                </div> */}
                             </div>
+
 
                             <div className="col-md-6">
                                 <div className="mb-3">
-                                    <label htmlFor="department" className="form-label">
+                                    <label htmlFor="customer" className="form-label">
                                         Khách hàng:
                                     </label>
                                     <select
                                         className="form-control text-center"
-                                        name="id"
+                                        name="customer_id"
                                         value={customer.customer_id}
                                         onChange={(e) => onInputChange(e)}
                                         required
@@ -214,67 +138,98 @@ export default function AddUser() {
                                         ))}
                                     </select>
                                 </div>
+                            </div>
 
-
+                            <div className='col-md-12'>
                                 <div className="mb-3">
-                                    <label htmlFor="address" className="form-label">
-                                        Thêm vào cho đỡ trống chỗ:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control text-center"
-                                        placeholder="Ví dụ: Ho Chi Minh City"
-                                        name="address"
-                                        value={task_cre_person}
-                                        onChange={(e) => onInputChange(e)}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">
+                                    <label htmlFor="description" className="form-label">
                                         Mô tả:
                                     </label>
-                                    <input
+                                    <textarea
                                         type="text"
                                         className="form-control text-center"
-                                        placeholder="Ví dụ: Nguyễn Võ Hoàng"
+                                        placeholder="Ví dụ: Create website with Navbar and Sidebar..."
                                         name="task_description"
                                         value={task_description}
                                         onChange={(e) => onInputChange(e)}
                                         required
                                     />
                                 </div>
-
-
-
-                                {/* <div className="mb-3 row" style={{ marginTop: "19.7px" }}>
-                                    <label htmlFor="password" className="col-form-label">
-                                        Mật khẩu:
-                                    </label>
-                                    <div className="input-group">
-                                        <input
-                                            type={showPassword ? "text" : "password"}
-                                            className="form-control text-center"
-                                            name="password"
-                                            value={password}
-                                            onChange={(e) => onInputChange(e)}
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-secondary"
-                                            onClick={toggleShowPassword}
-                                        >
-                                            {showPassword ? (
-                                                <i className="fa fa-eye"></i>
-                                            ) : (
-                                                <i className="fa fa-eye-slash"></i>
-                                            )}
-                                        </button>
-                                    </div>
-                                </div> */}
                             </div>
+
+                            <div className='col-md-6'>
+<div className="mb-3">
+                                    <label htmlFor="birthdate" className="form-label">
+                                        Ngày bắt đầu:
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control text-center"
+                                        name="task_start"
+                                        value={task_start}
+                                        onChange={(e) => onInputChange(e)}
+                                        required
+                                    />
+                                </div>
+
+                                
+
+                                <div className="mb-3">
+                                    <label htmlFor="extensiontime" className="form-label">
+                                        Kéo dài thời hạn:
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control text-center"
+                                        name="extension_time"
+                                        value={extension_time}
+                                        onChange={(e) => onInputChange(e)}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='col-md-6'>
+
+                            <div className="mb-3">
+                                    <label htmlFor="deadline" className="form-label">
+                                        Deadline:
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control text-center"
+                                        name="task_end"
+                                        value={task_end}
+                                        onChange={(e) => onInputChange(e)}
+                                        required
+                                    />
+                                </div>
+                                
+                            <div className="mb-3">
+                                    <label htmlFor="user_creTask" className="form-label">
+                                        Người tạo:
+                                    </label>
+                                    <select
+                                        className="form-control text-center"
+                                        name="user_id"
+                                        value={user_creTask.user_id}
+                                        onChange={(e) => onInputChange(e)}
+                                        required
+                                    >
+                                        <option value="" disabled>Chọn người giao</option>
+                                        {users?.map((list_user) => (
+                                            <option
+                                                key={list_user.user_id}
+                                                value={list_user?.user_id}
+                                            >
+                                                {list_user?.user_fullName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+
 
                             <div className="col-md-12 text-center">
                                 <button type="submit" className="btn btn-outline-primary mt-2">

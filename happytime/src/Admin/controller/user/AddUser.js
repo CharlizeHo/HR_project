@@ -25,6 +25,7 @@ export default function AddUser() {
 
   const [user, setUser] = useState({
     userName: "",
+    fullName: "",
     user_birthdate: "",
     gender: 0,
     address: "",
@@ -39,7 +40,7 @@ export default function AddUser() {
     user_avatar: ""
   });
 
-  const { userName, user_birthdate, gender, address, phonenum, email, password, department, user_avatar, user_isActivity } = user;
+  const { userName, fullName, user_birthdate, gender, address, phonenum, email, password, department, user_avatar, user_isActivity } = user;
 
   const [validEmail, setValidEmail] = useState(true);
 
@@ -91,21 +92,22 @@ export default function AddUser() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+        <div className="col-md-6 offset-md-3 border rounded p-4 shadow">
           <h2>Thêm người dùng</h2>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="row">
               <div className="col-md-6">
+
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
+                  <label htmlFor="fullName" className="form-label">
                     Họ và tên:
                   </label>
                   <input
                     type="text"
                     className="form-control text-center"
                     placeholder="Ví dụ: Nguyễn Võ Hoàng"
-                    name="userName"
-                    value={userName}
+                    name="fullName"
+                    value={fullName}
                     onChange={(e) => onInputChange(e)}
                     required
                   />
@@ -123,24 +125,6 @@ export default function AddUser() {
                     onChange={(e) => onInputChange(e)}
                     required
                   />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="gender" className="form-label">
-                    Giới tính:
-                  </label>
-                  <select
-                    className="form-control text-center"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => onInputChange(e)}
-                    required
-                  >
-                    <option>Chọn giới tính</option>
-                    <option value="1">Nam</option>
-                    <option value="2">Nữ</option>
-                    <option value="3">Khác</option>
-                  </select>
                 </div>
 
                 <div className="mb-3">
@@ -166,6 +150,25 @@ export default function AddUser() {
               </div>
 
               <div className="col-md-6">
+
+                <div className="mb-3">
+                  <label htmlFor="gender" className="form-label">
+                    Giới tính:
+                  </label>
+                  <select
+                    className="form-control text-center"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => onInputChange(e)}
+                    required
+                  >
+                    <option>Chọn giới tính</option>
+                    <option value="1">Nam</option>
+                    <option value="2">Nữ</option>
+                    <option value="3">Khác</option>
+                  </select>
+                </div>
+
                 <div className="mb-3">
                   <label htmlFor="phonenum" className="form-label">
                     Số điện thoại:
@@ -181,7 +184,34 @@ export default function AddUser() {
                   />
                 </div>
 
+
+
                 <div className="mb-3">
+                  <label htmlFor="department" className="form-label">
+                    Phòng ban:
+                  </label>
+                  <select
+                    className="form-control text-center"
+                    name="id"
+                    value={department.id}
+                    onChange={(e) => onInputChange(e)}
+                    required
+                  >
+                    <option value="" disabled>Chọn phòng ban</option>
+                    {departments?.map((list_department) => (
+                      <option
+                        key={list_department.id}
+                        value={list_department?.id}
+                      >
+                        {list_department?.departmentName}
+                      </option>
+                    ))}
+                  </select>
+                </div>             
+              </div>
+
+              <div className='col-md-12'>
+              <div className="mb-3">
                   <label htmlFor="address" className="form-label">
                     Địa chỉ:
                   </label>
@@ -195,31 +225,26 @@ export default function AddUser() {
                     required
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="department" className="form-label">
-                    Phòng ban:
+              </div>
+              
+              <div className='col-md-6'>
+              <div className="mb-3">
+                  <label htmlFor="username" className="form-label">
+                    Tên đăng nhập:
                   </label>
-                  <select
+                  <input
+                    type="text"
                     className="form-control text-center"
-                    name="id"
-                    value={department.id}
+                    placeholder="Ví dụ: wbjn123"
+                    name="userName"
+                    value={userName}
                     onChange={(e) => onInputChange(e)}
                     required
-                  >
-                    <option value="">Chọn phòng ban</option>
-                    {departments?.map((list_department) => (
-                      <option
-                        key={list_department.id}
-                        value={list_department?.id}
-                      >
-                        {list_department?.departmentName}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </div>
-
-                <div className="mb-3 row" style={{ marginTop: "19.7px" }}>
+              </div>
+              <div className='col-md-6'>
+              <div className="mb-3 row" style={{ marginTop: "-16px" }}>
                   <label htmlFor="password" className="col-form-label">
                     Mật khẩu:
                   </label>
