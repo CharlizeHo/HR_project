@@ -25,7 +25,7 @@ export default function EditDepartment() {
   const onSubmit = async (e) => {
     e.preventDefault();
     await axios.put(`http://localhost:8080/Department/getDepartment/${id}`, department);
-    navigate("/");
+    navigate("/admin/department");
   };
 
   const loadDepartment = async () => {
