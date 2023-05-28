@@ -9,7 +9,7 @@
   /* margin: 65px 85px 0px 65px; */
   padding-bottom: 40px;
   width: 95%;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 
 @media all and (max-width: 780px) {
