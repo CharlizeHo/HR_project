@@ -8,7 +8,7 @@ import Layout from "./Client/Components/layouts/layout";
 import LoginForm from "./Client/pages/Login/LoginForm";
 import "./App.css";
 // import TaskAssigned from "./Client/pages/ListTask/AssignTask";
-import Profile from "./Client/pages/Profile/profile";
+import Profile from "./Client/pages/Profile/Profile";
 
 import Department from "./Admin/pages/department/Department";
 import Customer from "./Admin/pages/customer/Customer";

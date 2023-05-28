@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import Form from "react-bootstrap/Form";
 
 import axios from "axios";
@@ -40,7 +40,7 @@ const ListNhanVien = () => {
     },
 
     {
-      field: "company.department",
+      field: "company",
       headerName: "Phòng ban",
       headerClassName: "header",
       flex: 1,
@@ -49,7 +49,6 @@ const ListNhanVien = () => {
 
   const [users, setUsers] = useState([]);
   const [searchUser, setSearchUser] = useState();
-  const [searchTask, setSearchTask] = useState();
 
   const { id } = useParams();
   useEffect(() => {
@@ -86,22 +85,27 @@ const ListNhanVien = () => {
               <option value="4">HR</option>
             </Form.Select>
           </div>
-          <form>
-            <input
-              type="text"
-              className="list-input"
-              value={searchUser}
-              placeholder="Nhập tên khách hàng"
-              onChange={(e) => setSearchUser(e.target.value)}
-            />
-          </form>
         </div>
         <div className="mt-2 mx-3" style={{ maxHeight: "400px" }}>
           <DataGrid
             getRowHeight={() => "auto"}
-            // checkboxSelection
             initialState={{
               pagination: { paginationModel: { pageSize: 5 } },
+              filter: {
+                filterModel: {
+                  items: [],
+                },
+              },
+            }}
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            slots={{ toolbar: GridToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
             }}
             rows={users}
             columns={columns}
