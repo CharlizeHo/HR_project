@@ -35,7 +35,8 @@ export default function AddTask() {
         extension_time: "",
         someoneDidIt: false,
         user_creTask: {
-            user_id: 0
+            user_id: 0,
+            role: ""
         },
         customer: {
             customer_id: "",
@@ -66,7 +67,8 @@ export default function AddTask() {
                 ...task,
                 user_creTask: {
                     user_id: parseInt(e.target.value),
-                    user_fullName: selectedUser.user_fullName
+                    user_fullName: selectedUser.user_fullName,
+                    role: selectedUser.role
                 },
             });
         } else {
@@ -184,7 +186,6 @@ export default function AddTask() {
                                         name="extension_time"
                                         value={extension_time}
                                         onChange={(e) => onInputChange(e)}
-                                        required
                                     />
                                 </div>
                             </div>

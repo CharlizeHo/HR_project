@@ -30,7 +30,6 @@ export default function Task() {
   const GetTask = async () => {
     const result = await Axios.get("http://localhost:8080/Task/getTask");
     setTasks(result.data);
-    console.log(tasks);
   };
 
   const [userTask, setuserTask] = useState({
@@ -38,7 +37,8 @@ export default function Task() {
       task_id: 0
     },
     user:{
-      user_id: 0
+      user_id: 0,
+      role: ""
     }
   })
 
@@ -78,7 +78,6 @@ export default function Task() {
     console.log(userTask);
     try {
       await axios.post("http://localhost:8080/userTask/add", userTask);
-      alert('success');
   } catch (error) {
       if (error.response && error.response.status === 500) {
           alert('Error');
@@ -95,10 +94,14 @@ export default function Task() {
 
   const onInputChange = (e) => {
  if (e.target.name === "user_id") {
+  const selectedUser = users.find(
+    (user) => user.user_id === parseInt(e.target.value)
+  );
         setuserTask({
             ...userTask,
             user: {
-                user_id: parseInt(e.target.value)
+                user_id: parseInt(e.target.value),
+                role: selectedUser.role
             },
         });
     }  else {
