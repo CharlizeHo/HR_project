@@ -2,59 +2,52 @@ import Form from "react-bootstrap/Form";
 import "./style.css";
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-import { mockDataTask } from "./data";
+// import { mockDataTask } from "./data";
 import axios from "axios";
 
 const ListTask = () => {
   const columns = [
     {
-      field: "id",
-      headerName: "Mã task",
+      field: "task_id",
+      headerName: "Mã công việc",
       headerClassName: "header",
-      flex: 0.5,
+      flex: 1,
     },
     {
-      field: "title",
+      field: "task_name",
       headerName: "Tiêu đề",
       headerClassName: "header",
       flex: 2,
     },
     {
-      field: "description",
+      field: "task_description",
       headerName: "Mô tả công việc",
       headerClassName: "header",
 
       flex: 3.5,
     },
-    {
-      field: "customer",
-      headerClassName: "header",
-      headerName: "Khách hàng",
-      flex: 2,
-    },
+    // {
+    //   field: "customer",
+    //   headerClassName: "header",
+    //   headerName: "Khách hàng",
+    //   flex: 2,
+    // },
 
     {
-      field: "state",
+      field: "someoneDidIt",
       headerName: "Trạng thái",
-      headerClassName: "header",
-      flex: 1,
-    },
-
-    {
-      field: "department",
-      headerName: "Phòng ban",
       headerClassName: "header",
       flex: 1,
     },
   ];
 
-  const [data, setData] = useState();
+  const [tasks, setTasks] = useState();
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/Task/getTask")
       .then((res) => {
-        setData(res.data.users);
+        setTasks(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -86,15 +79,6 @@ const ListTask = () => {
                 <option value="4">HR</option>
               </Form.Select>
             </div>
-            {/* <form>
-              <input
-                type="text"
-                className="list-input"
-                value={filterVal}
-                placeholder="Tìm kiếm"
-                onChange={handleFilterVal}
-              />
-            </form> */}
           </div>
           <div>
             {/* Table */}
@@ -103,6 +87,7 @@ const ListTask = () => {
               style={{ maxHeight: "400px", overflow: "scroll" }}
             >
               <DataGrid
+                getRowId={(row) => row.statId}
                 getRowHeight={() => "auto"}
                 initialState={{
                   pagination: { paginationModel: { pageSize: 4 } },
@@ -122,8 +107,8 @@ const ListTask = () => {
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
-                rows={mockDataTask}
-                // rows={data}
+                // rows={mockDataTask}
+                rows={tasks}
                 columns={columns}
                 sx={{
                   [`& .${gridClasses.cell}`]: {
