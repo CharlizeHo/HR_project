@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import Form from "react-bootstrap/Form";
-
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -48,12 +47,12 @@ const ListNhanVien = () => {
   ];
 
   const [users, setUsers] = useState([]);
-  const [searchUser, setSearchUser] = useState();
 
   const { id } = useParams();
   useEffect(() => {
     axios
       .get("https://dummyjson.com/users")
+      // .get("http://localhost:8080/listuser")
       .then((res) => {
         setUsers(res.data.users);
       })
