@@ -1,14 +1,15 @@
 package com.example.Manager.Controller;
 
+import com.example.Manager.DTO.UserDTO;
 import com.example.Manager.Model.User;
 import com.example.Manager.Reponsittory.UserReponsitory;
-import com.example.Manager.auth.AuthenticationResponse;
 import com.example.Manager.exception.ReponseMessage;
 import com.example.Manager.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth/UserCol")
+@CrossOrigin("http://localhost:3000/")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -29,11 +31,12 @@ public class UserController {
 
 
     private final PasswordEncoder passwordEncoder;
-//    @GetMapping
-//    public ResponseEntity<AuthenticationResponse> getToken( @RequestAttribute("userName",String userName){
-//       ;
-//        return ResponseEntity.ok("Test");
-//    }
+    @GetMapping
+    public ResponseEntity<String> getToken( ){
+        return ResponseEntity.ok("Test");
+    }
+
+    
 
     @GetMapping("/listuser")
     List<User> getAllUser(){

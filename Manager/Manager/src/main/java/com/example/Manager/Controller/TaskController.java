@@ -1,9 +1,6 @@
 package com.example.Manager.Controller;
 
-import com.example.Manager.Model.Customer;
-import com.example.Manager.Model.StateTask;
-import com.example.Manager.Model.Task;
-import com.example.Manager.Model.UserTask;
+import com.example.Manager.Model.*;
 import com.example.Manager.Reponsittory.TaskRepository;
 import com.example.Manager.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,13 @@ public class TaskController {
         return taskRepository.findAll();
     }
 
+//    @GetMapping("user/getTask")
+//    List<Task> getAllTaskByUser(){
+//        Task task= new Task();
+//        User user = new User();
+//        user.getDepartment().getDepartmentName();
+//        return taskRepository.findByDepartment()
+//    }
 //    @PostMapping ("/getTask/test")
 //    boolean getTaskClass(@RequestBody int idTask) {
 //        return taskRepository.findById(idTask)

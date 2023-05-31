@@ -1,16 +1,10 @@
 package com.example.Manager.auth;
 
 import com.example.Manager.Model.Department;
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-
 @Data
 @Builder
 @AllArgsConstructor
