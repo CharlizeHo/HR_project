@@ -36,11 +36,15 @@ export default function EditUser() {
             departmentName: ""
         },
         user_isActivity: true,
-        user_avatar: ""
+        user_avatar: "",
+        authorities: 
+            {
+                authority: "USER"
+            }
     });
 
 
-    const { username, user_fullName, user_birthdate, user_gender, user_address, user_phonenum, user_email, password, department, user_avatar, user_isActivity } = user;
+    const { username, user_fullName, user_birthdate, user_gender, user_address, user_phonenum, user_email, password, department, user_avatar, user_isActivity, authorities } = user;
     // const formattedBirthdate = format(user_birthdate, 'dd/MM/yyyy');
 
     const [validEmail, setValidEmail] = useState(true);
@@ -395,6 +399,7 @@ export default function EditUser() {
                                     value={department.id}
                                     onChange={(e) => onInputChange(e)}
                                     required
+                                    disabled
                                 >
                                     <option disabled>Chọn phòng ban</option>
                                     {departments &&

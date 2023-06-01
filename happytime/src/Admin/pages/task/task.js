@@ -10,39 +10,35 @@ export default function Task() {
   const [showAssignDialog, setShowAssignDialog] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedTaskIdForAssign, setSelectedTaskIdForAssign] = useState(null);
-
+  const [users, setUsers] = useState(null);
+  const [userTask, setuserTask] = useState({
+    task: {
+      task_id: 0
+    },
+    user: {
+      user_id: 0,
+      role: ""
+    }
+  });
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const { id } = useParams();
-  const [users, setUsers] = useState(null)
-
+  const {task, user} = userTask;
   useEffect(() => {
     GetUser();
+    GetTask();
   }, []);
 
   const GetUser = async () => {
     const result = await axios.get("http://localhost:8080/api/v1/auth/UserCol/getUser");
     setUsers(result.data);
   };
-  useEffect(() => {
-    GetTask();
-  }, []);
 
   const GetTask = async () => {
     const result = await Axios.get("http://localhost:8080/Task/getTask");
     setTasks(result.data);
   };
 
-  const [userTask, setuserTask] = useState({
-    task: {
-      task_id: 0
-    },
-    user:{
-      user_id: 0,
-      role: ""
-    }
-  })
-
-  const {task, user} = userTask;
   const deleteTask = async (id) => {
     await axios.delete(`http://localhost:8080/Task/deleteTask/${id}`);
     GetTask();
@@ -69,22 +65,22 @@ export default function Task() {
       task: {
         task_id: id
       }
-    })
+    });
     setShowAssignDialog(true);
   };
-
 
   const handleAssignTask = async () => {
     console.log(userTask);
     try {
       await axios.post("http://localhost:8080/userTask/add", userTask);
-  } catch (error) {
+      setShowSuccessMessage(true);
+    } catch (error) {
       if (error.response && error.response.status === 500) {
-          alert('Error');
+        alert('Error');
       } else {
-          alert('An error occurred. Please try again.');
+        alert('An error occurred. Please try again.');
       }
-  }
+    }
     setShowAssignDialog(false);
   };
 
@@ -93,21 +89,33 @@ export default function Task() {
   };
 
   const onInputChange = (e) => {
- if (e.target.name === "user_id") {
-  const selectedUser = users.find(
-    (user) => user.user_id === parseInt(e.target.value)
-  );
-        setuserTask({
-            ...userTask,
-            user: {
-                user_id: parseInt(e.target.value),
-                role: selectedUser.role
-            },
-        });
-    }  else {
-        setuserTask({ ...userTask, [e.target.name]: e.target.value });
+    if (e.target.name === "user_id") {
+      const selectedUser = users.find(
+        (user) => user.user_id === parseInt(e.target.value)
+      );
+      setuserTask({
+        ...userTask,
+        user: {
+          user_id: parseInt(e.target.value),
+          role: selectedUser.role
+        },
+      });
+    } else {
+      setuserTask({ ...userTask, [e.target.name]: e.target.value });
     }
-};
+  };
+
+  useEffect(() => {
+    let timer;
+    if (showSuccessMessage) {
+      timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showSuccessMessage]);
 
   return (
     <div className='container container-task'>
@@ -115,6 +123,12 @@ export default function Task() {
       <div style={{ float: "right", marginBottom: "10px" }}>
         <Link className='btn btn-add btn-primary' to="/admin/task/add">+Thêm</Link>
       </div>
+
+      {showSuccessMessage && (
+        <div className="float-message success-message">
+          Task assigned successfully!
+        </div>
+      )}
 
       <table className="table table-striped table-hover shadow">
         <thead>
@@ -181,20 +195,16 @@ export default function Task() {
               required
             />
 
-
-
             <label>Chọn người làm:</label>
-            <select className="form-select" aria-label="Người phân công" name = "user_id" value={user.user_id} onChange={(e) => onInputChange(e)}>
-              {
-                users?.map((list_user) => (
-                  <option
-                    key={list_user.user_id}
-                    value={list_user?.user_id}
-                  >
-                    {list_user?.user_fullName}
-                  </option>
-                ))
-              }
+            <select className="form-select" aria-label="Người phân công" name="user_id" value={user.user_id} onChange={(e) => onInputChange(e)}>
+              {users?.map((list_user) => (
+                <option
+                  key={list_user.user_id}
+                  value={list_user?.user_id}
+                >
+                  {list_user?.user_fullName}
+                </option>
+              ))}
             </select>
             <div>
               <button className='btn btn-confirm btn-primary mt-2' onClick={() => handleAssignTask(selectedTaskIdForAssign)}>Phân công</button>

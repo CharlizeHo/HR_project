@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
     long millis=System.currentTimeMillis();
 
@@ -23,47 +24,47 @@ public class CustomerController {
         private CustomerRepository customerRepository;
 
 
-    @PostMapping("customer/cre")
-        Customer newCustomer (@RequestBody Customer newCustomer){
+    @PostMapping("/add")
+    Customer newCustomer(@RequestBody Customer newCustomer) {
 
-            Customer customer = Customer.builder()
-                    .customerName(newCustomer.getCustomerName())
-                    .customer_phonenum(newCustomer.getCustomer_phonenum())
-                    .customer_address(newCustomer.getCustomer_address())
-                    .isAcivity(true)
-                    .customer_cre_date(date)
-                    .build();
-            return customerRepository.save(customer);
+        Customer customer = Customer.builder()
+                .customerName(newCustomer.getCustomerName())
+                .customer_phonenum(newCustomer.getCustomer_phonenum())
+                .customer_address(newCustomer.getCustomer_address())
+                .isAcivity(true)
+                .customer_cre_date(date)
+                .build();
+        return customerRepository.save(customer);
+    }
+
+    @GetMapping("/getCustomer")
+    List<Customer> getAllCustomer() {
+        return customerRepository.findAll();
+    }
+
+    @GetMapping("/getCustomer/{id}")
+    Customer getCustomerbyId(@PathVariable int id) {
+        return customerRepository.findById(id).orElseThrow();
+    }
+
+    @PutMapping("/getCustomer/{id}")
+    Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable int id) {
+        return customerRepository.findById(id).map(customer -> {
+            customer.setCustomerName(newCustomer.getCustomerName());
+            customer.setCustomer_phonenum(newCustomer.getCustomer_phonenum());
+            customer.setCustomer_address(newCustomer.getCustomer_address());
+            customer.setCustomer_mod_date(date);
+            return customerRepository.save((customer));
+        }).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @DeleteMapping("getCustomer/{id}")
+    String deleteCustomer(@PathVariable int id) {
+        if (!customerRepository.existsById(id)) {
+            throw new UserNotFoundException(id);
         }
-
-        @GetMapping("/getCustomer")
-        List<Customer> getAllCustomer(){
-            return customerRepository.findAll();
-        }
-
-        @GetMapping("/admin/getCustomer/{id}")
-        Customer getCustomerbyId(@PathVariable int id){
-            return customerRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
-        }
-
-//        @PutMapping("/admin/getCustomer/{id}")
-//        Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable int id){
-//            return customerRepository.findById(id).map(customer -> {
-//                customer.setCustomer_name(newCustomer.getCustomer_name());
-//                customer.setCustomer_phonenum(newCustomer.getCustomer_phonenum());
-//                customer.setCustomer_address(newCustomer.getCustomer_address());
-//                customer.setCustomer_mod_date(new Date());
-//                return customerRepository.save((customer));
-//            }).orElseThrow(() -> new DepartmentNotFoundException(id));
-//        }
-
-//        @DeleteMapping("/admin/getCustomer/{id}")
-//        String deleteCustomer (@PathVariable int id){
-//            if (!customerRepository.existsById(id)) {
-//                throw new DepartmentNotFoundException(id);
-//            }
-//            customerRepository.deleteById(id);
-//            return "Deleted successfully";
-//        }
+        customerRepository.deleteById(id);
+        return "Deleted successfully";
+    }
 }
 

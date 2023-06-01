@@ -19,6 +19,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/userTask")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserTaskController {
     @Autowired
     UserTaskRepository userTaskRepository;
@@ -51,7 +52,7 @@ public class UserTaskController {
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping("/getTask/userdo")
+    @PostMapping("/add")
     UserTask getTaskClass(@RequestBody UserTask userTask){
         Task tak= userTask.getTask();
         boolean check = checkExistTask(tak.getTask_id());

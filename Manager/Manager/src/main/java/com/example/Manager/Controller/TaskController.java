@@ -1,9 +1,6 @@
 package com.example.Manager.Controller;
 
-import com.example.Manager.Model.Customer;
-import com.example.Manager.Model.StateTask;
-import com.example.Manager.Model.Task;
-import com.example.Manager.Model.UserTask;
+import com.example.Manager.Model.*;
 import com.example.Manager.Reponsittory.TaskRepository;
 import com.example.Manager.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Task")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
 
     long millis=System.currentTimeMillis();
@@ -22,7 +20,7 @@ public class TaskController {
     java.sql.Date date = new java.sql.Date(millis);
     @Autowired
     private TaskRepository taskRepository;
-    @PostMapping("/createtask")
+    @PostMapping("/add")
     Task newTask (@RequestBody Task newTask){
 
         Task task = Task.builder()
@@ -43,6 +41,11 @@ public class TaskController {
         return taskRepository.findAll();
     }
 
+    @GetMapping("/getTask/{id}")
+    Task getTaskbyId(@PathVariable int id){
+        return taskRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
 //    @PostMapping ("/getTask/test")
 //    boolean getTaskClass(@RequestBody int idTask) {
 //        return taskRepository.findById(idTask)
@@ -54,27 +57,29 @@ public class TaskController {
 //                }).orElseThrow(() -> new UserNotFoundException(idTask));
 //    }
 //
-//    @PutMapping("/getTask/{id}")
-//    Task updateTask(@RequestBody Task newTask, @PathVariable int id){
-//        return taskRepository.findById(id).map(task -> {
-//            task.setTask_description(newTask.getTask_description());
-//            task.setTask_deadline(newTask.getTask_deadline());
-//            task.setTask_state(newTask.getTask_state());
-//            task.setTask_mod_date(new Date());
-//            task.setTask_cre_person(newTask.getTask_cre_person());
-//            task.setCustomer(newTask.getCustomer());
-//            return taskRepository.save((task));
-//        }).orElseThrow(() -> new DepartmentNotFoundException(id));
-//    }
+@PutMapping("/updateTask/{id}")
+Task updateTask(@RequestBody Task newTask, @PathVariable int id){
+    return taskRepository.findById(id).map(task -> {
+        task.setTask_name(newTask.getTask_name());
+        task.setTask_description(newTask.getTask_description());
+        task.setTask_start(newTask.getTask_start());
+        task.setTask_end(newTask.getTask_end());
+        task.setExtension_time(newTask.getExtension_time());
+        task.setTask_mod_date(new Date());
+        task.setUser_creTask(newTask.getUser_creTask());
+        task.setCustomer(newTask.getCustomer());
+        return taskRepository.save((task));
+    }).orElseThrow(() -> new UserNotFoundException(id));
+}
 //
-//    @DeleteMapping("/getTask/{id}")
-//    String deleteTask (@PathVariable int id){
-//        if (!taskRepository.existsById(id)) {
-//            throw new DepartmentNotFoundException(id);
-//        }
-//        taskRepository.deleteById(id);
-//        return "Deleted successfully";
-//    }
+@DeleteMapping("/deleteTask/{id}")
+String deleteTask (@PathVariable int id){
+    if (!taskRepository.existsById(id)) {
+        throw new UserNotFoundException(id);
+    }
+    taskRepository.deleteById(id);
+    return "Deleted successfully";
+}
 
 //    @GetMapping("/Testquery")
 //    List<UserTask> test(){
