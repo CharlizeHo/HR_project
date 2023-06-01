@@ -1,9 +1,8 @@
-import Form from "react-bootstrap/Form";
-import "./style.css";
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-// import { mockDataTask } from "./data";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import "./style.css";
 
 const ListTask = () => {
   const columns = [
@@ -11,46 +10,70 @@ const ListTask = () => {
       field: "task_id",
       headerName: "Mã công việc",
       headerClassName: "header",
-      flex: 1,
+      valueGetter: getTaskID,
     },
     {
       field: "task_name",
-      headerName: "Tiêu đề",
+      headerName: "Tiêu đề công việc",
       headerClassName: "header",
+      valueGetter: getTaskTitle,
       flex: 2,
     },
     {
       field: "task_description",
       headerName: "Mô tả công việc",
       headerClassName: "header",
-
-      flex: 3.5,
+      valueGetter: getTaskDescription,
+      flex: 2,
     },
-    // {
-    //   field: "customer",
-    //   headerClassName: "header",
-    //   headerName: "Khách hàng",
-    //   flex: 2,
-    // },
-
     {
-      field: "someoneDidIt",
+      field: "customer",
+      headerClassName: "header",
+      headerName: "Khách hàng",
+      valueGetter: getCustomer,
+      flex: 2,
+    },
+    {
+      // field: "department",
+      headerName: "Phòng ban",
+      headerClassName: "header",
+      valueGetter: getDepartment,
+      flex: 2,
+    },
+    {
+      field: "state",
       headerName: "Trạng thái",
       headerClassName: "header",
       flex: 1,
     },
   ];
 
-  const [tasks, setTasks] = useState();
+  function getTaskID(params) {
+    return `${params.row.task.task_id}`;
+  }
+  function getTaskTitle(params) {
+    return `${params.row.task.task_name}`;
+  }
+  function getTaskDescription(params) {
+    return `${params.row.task.task_description}`;
+  }
+  function getCustomer(params) {
+    return `${params.row.task.customer.customerName}`;
+  }
+  function getDepartment(params) {
+    return `${params.row.task.user_creTask.department.departmentName}`;
+  }
+
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/Task/getTask")
-      .then((res) => {
-        setTasks(res.data);
-      })
-      .catch((err) => console.log(err));
+    GetTask();
   }, []);
+
+  const GetTask = async () => {
+    const result = await axios.get("http://localhost:8080/userTask/getAll");
+    setTasks(result.data);
+  };
 
   return (
     <div className="profile-container">
@@ -87,7 +110,7 @@ const ListTask = () => {
               style={{ maxHeight: "400px", overflow: "scroll" }}
             >
               <DataGrid
-                getRowId={(row) => row.statId}
+                getRowId={(row) => row.userTaskId}
                 getRowHeight={() => "auto"}
                 initialState={{
                   pagination: { paginationModel: { pageSize: 4 } },
@@ -107,7 +130,6 @@ const ListTask = () => {
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
-                // rows={mockDataTask}
                 rows={tasks}
                 columns={columns}
                 sx={{
