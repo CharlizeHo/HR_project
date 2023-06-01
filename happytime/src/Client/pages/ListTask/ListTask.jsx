@@ -1,11 +1,57 @@
-import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import "./style.css";
-import ListTaskTable from "./ListTaskTable";
+import React, { useEffect, useState } from "react";
+import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
+// import { mockDataTask } from "./data";
+import axios from "axios";
 
 const ListTask = () => {
-  const [searchTask, setSearchTask] = useState();
-  const [searchEmployers, setSearchEmployers] = useState();
+  const columns = [
+    {
+      field: "task_id",
+      headerName: "Mã công việc",
+      headerClassName: "header",
+      flex: 1,
+    },
+    {
+      field: "task_name",
+      headerName: "Tiêu đề",
+      headerClassName: "header",
+      flex: 2,
+    },
+    {
+      field: "task_description",
+      headerName: "Mô tả công việc",
+      headerClassName: "header",
+
+      flex: 3.5,
+    },
+    // {
+    //   field: "customer",
+    //   headerClassName: "header",
+    //   headerName: "Khách hàng",
+    //   flex: 2,
+    // },
+
+    {
+      field: "someoneDidIt",
+      headerName: "Trạng thái",
+      headerClassName: "header",
+      flex: 1,
+    },
+  ];
+
+  const [tasks, setTasks] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/Task/getTask")
+      .then((res) => {
+        setTasks(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="profile-container">
       <div className="list-content">
@@ -33,27 +79,48 @@ const ListTask = () => {
                 <option value="4">HR</option>
               </Form.Select>
             </div>
-            <form>
-              <input
-                type="text"
-                className="list-input"
-                value={searchTask}
-                placeholder="Nhập tiêu đề công việc"
-                onChange={(e) => setSearchTask(e.target.value)}
-              />
-
-              <input
-                type="text"
-                className="list-input"
-                value={searchEmployers}
-                placeholder="Nhập tên khách hàng"
-                onChange={(e) => setSearchEmployers(e.target.value)}
-              />
-            </form>
           </div>
           <div>
             {/* Table */}
-            <ListTaskTable />
+            <div
+              className="mt-2 mx-3"
+              style={{ maxHeight: "400px", overflow: "scroll" }}
+            >
+              <DataGrid
+                getRowId={(row) => row.statId}
+                getRowHeight={() => "auto"}
+                initialState={{
+                  pagination: { paginationModel: { pageSize: 4 } },
+                  filter: {
+                    filterModel: {
+                      items: [],
+                    },
+                  },
+                }}
+                disableColumnFilter
+                disableColumnSelector
+                disableDensitySelector
+                slots={{ toolbar: GridToolbar }}
+                slotProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 },
+                  },
+                }}
+                // rows={mockDataTask}
+                rows={tasks}
+                columns={columns}
+                sx={{
+                  [`& .${gridClasses.cell}`]: {
+                    py: 1.5,
+                  },
+                  "& .header": {
+                    backgroundColor: "orange",
+                    fontWeight: "700px",
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -116,4 +116,6 @@ public class UserTaskController {
 //        AllCountTask countTask = new AllCountTask(100,fail,doing,4,late,finish);
         return userTaskService.getNumberALLStateTask();
     }
+
+
 }

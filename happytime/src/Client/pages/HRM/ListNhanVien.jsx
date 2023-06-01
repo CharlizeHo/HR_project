@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import Form from "react-bootstrap/Form";
-
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -14,33 +13,19 @@ const ListNhanVien = () => {
       flex: 0.5,
     },
     {
-      field: "lastName",
-      headerName: "Họ",
+      field: "user_fullName",
+      headerName: "Tên nhân viên",
       headerClassName: "header",
-      flex: 1.5,
-    },
-    {
-      field: "firstName",
-      headerName: "Tên",
-      headerClassName: "header",
-      flex: 1.5,
-    },
-    {
-      field: "birthDate",
-      headerClassName: "header",
-      headerName: "Ngày sinh",
       flex: 2,
     },
-
     {
-      field: "email",
+      field: "user_email",
       headerName: "Email",
       headerClassName: "header",
       flex: 2,
     },
-
     {
-      field: "company",
+      field: "department.department",
       headerName: "Phòng ban",
       headerClassName: "header",
       flex: 1,
@@ -48,14 +33,14 @@ const ListNhanVien = () => {
   ];
 
   const [users, setUsers] = useState([]);
-  const [searchUser, setSearchUser] = useState();
 
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get("https://dummyjson.com/users")
+      // .get("https://dummyjson.com/users")
+      .get("http://localhost:8080/api/v1/auth/UserCol/listuser")
       .then((res) => {
-        setUsers(res.data.users);
+        setUsers(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -88,6 +73,7 @@ const ListNhanVien = () => {
         </div>
         <div className="mt-2 mx-3" style={{ maxHeight: "400px" }}>
           <DataGrid
+            getRowId={(row) => row.statId}
             getRowHeight={() => "auto"}
             initialState={{
               pagination: { paginationModel: { pageSize: 5 } },

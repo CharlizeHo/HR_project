@@ -60,12 +60,15 @@ public class User implements Serializable, UserDetails {
 
     private Date user_mod_date;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "department", referencedColumnName = "department_id")
     private Department department;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<UserTask> userTasks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

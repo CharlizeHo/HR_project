@@ -1,0 +1,78 @@
+/* body {
+  background-color: #f8f8f8;
+}
+h3 {
+  color: orange;
+  text-align: center;
+}
+.card-container.card {
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+}
+
+#logo {
+  align-self: center;
+  width: 50%;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-control {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: transparent;
+  box-shadow: none;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-control:focus {
+  border-color: orange;
+  box-shadow: none;
+}
+
+.btn-signin {
+  width: 50%;
+  background-color: orange;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.btn-signin:hover,
+.btn-signin:focus {
+  background-color: #fcc35a;
+  color: white;
+}
+
+.forgot-password {
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-right: 70px;
+  color: orange;
+}
+#registerText {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.registerLink {
+  color: orange;
+} */
