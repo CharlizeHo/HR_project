@@ -11,7 +11,7 @@ const Home = () => {
       <div className="home-container">
         {/* Layout */}
         <span>
-          <h4>Hôm nay</h4>
+          <h4>Today</h4>
         </span>
         <section>
           <div className="section-banner">

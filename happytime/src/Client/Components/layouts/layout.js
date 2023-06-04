@@ -11,10 +11,7 @@ export default () => {
         <Navbar isOpen={isOpen} setOpen={setOpen} />
         <div style={{ display: "flex" }}>
           <Sidebar className="container" isOpen={isOpen} />
-          <div
-            className="main-content"
-            // style={{ width: isOpen ? "80%" : "100%" }}
-          >
+          <div className="main-content">
             <Outlet />
           </div>
         </div>

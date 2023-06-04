@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import clsx from "clsx";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import "./style.css";
@@ -8,48 +10,76 @@ const ListTask = () => {
   const columns = [
     {
       field: "task_id",
-      headerName: "Mã công việc",
+      headerName: "No.",
       headerClassName: "header",
       valueGetter: getTaskID,
+      flex: 0.5,
     },
     {
       field: "task_name",
-      headerName: "Tiêu đề công việc",
+      headerName: "Task Title",
       headerClassName: "header",
       valueGetter: getTaskTitle,
-      flex: 2,
+      flex: 1.5,
     },
     {
       field: "task_description",
-      headerName: "Mô tả công việc",
+      headerName: "Description",
       headerClassName: "header",
       valueGetter: getTaskDescription,
-      flex: 2,
+      flex: 1.5,
     },
     {
       field: "customer",
+      headerName: "Customer",
       headerClassName: "header",
-      headerName: "Khách hàng",
       valueGetter: getCustomer,
-      flex: 2,
+      flex: 1.2,
     },
     {
-      // field: "department",
-      headerName: "Phòng ban",
+      field: "department",
+      headerName: "Department",
       headerClassName: "header",
       valueGetter: getDepartment,
-      flex: 2,
+      flex: 1.2,
+      cellClassName: (params) => {
+        return clsx("department", {
+          HR: params.value == "Department HR",
+          FrontEnd: params.value == "Department FontEnd",
+          BackEnd: params.value == "Department BackEnd",
+        });
+      },
     },
     {
       field: "state",
-      headerName: "Trạng thái",
+      headerName: "Task's State",
       headerClassName: "header",
-      flex: 1,
+      flex: 0.8,
+      cellClassName: (params) => {
+        return clsx("state", {
+          Late: params.value == "Late",
+        });
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      headerClassName: "header",
+      flex: 0.8,
+      sortable: false,
+      renderCell: (params) => {
+        const onClick = (e) => {
+        //  action......
+          return ;
+        };
+
+        return <Button onClick={onClick}>Edit</Button>;
+      },
     },
   ];
 
   function getTaskID(params) {
-    return `${params.row.task.task_id}`;
+    return `${params.row.userTaskId}`;
   }
   function getTaskTitle(params) {
     return `${params.row.task.task_name}`;
@@ -78,33 +108,41 @@ const ListTask = () => {
   return (
     <div className="profile-container">
       <div className="list-content">
-        {/* Main Content */}
         <div className="list-wrap">
-          {/* Select Items */}
           <h6 className="pl-3 pt-3" style={{ color: "orange" }}>
-            DANH SÁCH CÔNG VIỆC
+            LIST OF TASKS
           </h6>
           <div className="list-wrap-container-task">
             <div>
-              <Form.Select className="list-select-items">
-                <option>Trạng thái hoạt động</option>
-                <option value="1">Tất cả</option>
-                <option value="2">Mở</option>
-                <option value="3">Đóng</option>
+              <Form.Select
+                className="list-select-items"
+                defaultValue={"default"}
+              >
+                <option disabled value="default">
+                  Choose a Department
+                </option>
+                <option value="1">HR</option>
+                <option value="2">BackEnd</option>
+                <option value="3">FrontEnd</option>
               </Form.Select>
             </div>
             <div>
-              <Form.Select className="list-select-items">
-                <option>Phòng ban</option>
-                <option value="1">Tất cả</option>
-                <option value="2">FrontEnd</option>
-                <option value="3">BackEnd</option>
-                <option value="4">HR</option>
+              <Form.Select
+                className="list-select-items"
+                name="Task's State"
+                defaultValue={"default"}
+              >
+                <option disabled value="default">
+                  Choose a task's state
+                </option>
+                <option value="1">Open</option>
+                <option value="2">Doing</option>
+                <option value="3">Finish</option>
+                <option value="4">Late</option>
               </Form.Select>
             </div>
           </div>
           <div>
-            {/* Table */}
             <div
               className="mt-2 mx-3"
               style={{ maxHeight: "400px", overflow: "scroll" }}
@@ -113,12 +151,8 @@ const ListTask = () => {
                 getRowId={(row) => row.userTaskId}
                 getRowHeight={() => "auto"}
                 initialState={{
-                  pagination: { paginationModel: { pageSize: 4 } },
-                  filter: {
-                    filterModel: {
-                      items: [],
-                    },
-                  },
+                  pagination: { paginationModel: { pageSize: 5 } },
+                  filter: { filterModel: { items: [] } },
                 }}
                 disableColumnFilter
                 disableColumnSelector
@@ -130,17 +164,32 @@ const ListTask = () => {
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
-                rows={tasks}
-                columns={columns}
                 sx={{
                   [`& .${gridClasses.cell}`]: {
                     py: 1.5,
                   },
                   "& .header": {
                     backgroundColor: "orange",
-                    fontWeight: "700px",
+                  },
+                  "& .department.HR": {
+                    backgroundColor: "linen",
+                    margin: "1px",
+                  },
+                  "& .department.FrontEnd": {
+                    backgroundColor: "lightpink",
+                    margin: "1px",
+                  },
+                  "& .department.BackEnd": {
+                    backgroundColor: "lightblue",
+                    margin: "1px",
+                  },
+                  "& .state.Late": {
+                    backgroundColor: "tomato",
+                    margin: "1px",
                   },
                 }}
+                rows={tasks}
+                columns={columns}
               />
             </div>
           </div>
