@@ -1,22 +1,38 @@
 import React, { useState } from "react";
-import logo from "../../Components/common/image/logo.png";
-import { Link } from "react-router-dom";
-import "./LoginValidation";
+import logo from "../../Components/common/logo.png";
 import Validation from "./LoginValidation";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
-  const [values, setValues] = useState({
-    email: " ",
-    password: " ",
+  let navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    userName: "",
+    password: "",
   });
+
+  const { userName, password } = user;
 
   const [errors, setErrors] = useState({});
   const handleInput = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
+    setErrors(Validation(user));
+    console.log(user);
+
+    axios
+      .post("http://localhost:8080/api/v1/auth/authenticate", user)
+      .then((res) => {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        console.log(res.data);
+        // const authority = res.data.role[0].authority;
+        navigate("/home");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <section className="vh-100" style={{ backgroundColor: "#f5f5f5" }}>
@@ -28,15 +44,18 @@ const LoginForm = () => {
           <div className="row align-items-center text-center">
             {/* Left */}
             <div className="col-lg-6 mb-5">
-              <h1 className="my-5 mr-4 display-3 lh-base">
-                Nền tảng quản lý
+              <h1
+                className="my-5 mr-4 display-5 lh-base"
+                style={{ fontWeight: "380" }}
+              >
+                Human Resources
                 <br />
-                <span style={{ color: "orange" }}>Nhân Sự Tốt Nhất</span>
+                <span style={{ color: "orange" }}>Management Platform</span>
                 <br />
-                cho Doanh Nghiệp
+                For Industry
               </h1>
               <p className="mx-auto" style={{ color: "#757f8e" }}>
-                @2023 VTI_HappyTime. Một sản phẩm của team VTI.
+                @2023 VTI_HappyTime. A product of team VTI.
               </p>
             </div>
             {/* Right */}
@@ -45,22 +64,23 @@ const LoginForm = () => {
                 <div>
                   <img className="w-50" id="logo" src={logo} alt="logo" />
                   <h5
-                    className="fw-normal mb-3 pb-3"
+                    className="fw-normal fs-3"
                     style={{ letterSpacing: "1px" }}
                   >
-                    MỜI BẠN ĐĂNG NHẬP
+                    Welcome!
                   </h5>
-                  <form className="d-block" onSubmit={handleSubmit}>
+                  <form className="d-block" onSubmit={(e) => handleSubmit(e)}>
                     <div className="form-outline mb-4">
                       <input
-                        name="email"
-                        type="email"
+                        name="userName"
+                        type="text"
                         className="form-control form-control-lg"
-                        placeholder="Nhập tài khoản email"
-                        onChange={handleInput}
+                        placeholder="Username"
+                        value={userName}
+                        onChange={(e) => handleInput(e)}
                       />
-                      {errors.email && (
-                        <span className="text-danger">{errors.email}</span>
+                      {errors.username && (
+                        <span className="text-danger">{errors.username}</span>
                       )}
                     </div>
 
@@ -69,8 +89,9 @@ const LoginForm = () => {
                         name="password"
                         type="password"
                         className="form-control form-control-lg"
-                        placeholder="Nhập mật khẩu"
-                        onChange={handleInput}
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => handleInput(e)}
                       />
                       {errors.password && (
                         <span className="text-danger">{errors.password}</span>
@@ -79,16 +100,13 @@ const LoginForm = () => {
 
                     <a className="mx-auto pt-1 mb-4" to="/Home">
                       <button
-                        className="d-block btn btn-dark btn-block btn-lg p-2 text-center"
+                        className="d-block btn btn-block btn-lg p-2 text-center"
+                        style={{ background: "orange", color: "white" }}
                         type="submit"
                       >
-                        Đăng nhập
+                        Log in
                       </button>
                     </a>
-
-                    <Link className="small text-muted mt-5" to="#!">
-                      Quên Mật Khẩu?
-                    </Link>
                   </form>
                 </div>
               </div>

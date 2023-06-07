@@ -7,7 +7,7 @@ import NotFound from "./Client/pages/NotFound/NotFound";
 import Layout from "./Client/Components/layouts/layout";
 import LoginForm from "./Client/pages/Login/LoginForm";
 import "./App.css";
-import Profile from "./Client/pages/Profile/Profile";
+import Profile from "./Client/pages/Profile/profile";
 
 import Department from "./Admin/pages/department/Department";
 import Customer from "./Admin/pages/customer/Customer";

@@ -32,7 +32,14 @@ const Sidebar = ({ isOpen }) => {
       >
         {menuItem.map((item, index) => {
           return (
-            <NavLink to={item.path} key={index} className="icon-link">
+            <NavLink
+              to={item.path}
+              key={index}
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title={item.name}
+              className="icon-link"
+            >
               <div
                 className="icon"
                 style={{ marginLeft: isOpen ? "14px" : "27px" }}
@@ -55,13 +62,20 @@ const Sidebar = ({ isOpen }) => {
           onClick={handleShow}
         >
           <div
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Log out"
             className="hover d-flex gap-2 align-items-center text-decoration-none"
             style={{
               marginLeft: isOpen ? "14px" : "27px",
             }}
           >
             <i className="fas fa-sign-out-alt" />
-            <span style={{ display: isOpen ? "block" : "none",  fontSize: "14px" }}>Log out</span>
+            <span
+              style={{ display: isOpen ? "block" : "none", fontSize: "14px" }}
+            >
+              Log out
+            </span>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../common/image/logo.png";
+import logo from "../../common/logo.png";
 import "./style.css";
 import { NavLink } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";

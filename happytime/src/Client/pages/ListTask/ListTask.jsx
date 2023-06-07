@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import clsx from "clsx";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import "./style.css";
+import { red } from "@mui/material/colors";
 
 const ListTask = () => {
   const columns = [
@@ -44,9 +45,9 @@ const ListTask = () => {
       flex: 1.2,
       cellClassName: (params) => {
         return clsx("department", {
-          HR: params.value == "Department HR",
-          FrontEnd: params.value == "Department FontEnd",
-          BackEnd: params.value == "Department BackEnd",
+          HR: params.value === "Department HR",
+          FrontEnd: params.value === "Department FontEnd",
+          BackEnd: params.value === "Department BackEnd",
         });
       },
     },
@@ -56,28 +57,28 @@ const ListTask = () => {
       headerClassName: "header",
       flex: 0.8,
       cellClassName: (params) => {
-        return clsx("state", {
-          Late: params.value == "Late",
-        });
-      },
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      headerClassName: "header",
-      flex: 0.8,
-      sortable: false,
-      renderCell: (params) => {
-        const onClick = (e) => {
-        //  action......
-          return ;
-        };
-
-        return <Button onClick={onClick}>Edit</Button>;
+        return (
+          <Chip
+            variant="outlined"
+            size="small"
+            color="warning"
+            {...getChipProps(params)}
+          />
+        );
       },
     },
   ];
 
+  function getChipProps(params) {
+    if (params.value === "Late") {
+      return {
+        label: params.value,
+        style: {
+          borderColor: red[500],
+        },
+      };
+    }
+  }
   function getTaskID(params) {
     return `${params.row.userTaskId}`;
   }
@@ -183,10 +184,14 @@ const ListTask = () => {
                     backgroundColor: "lightblue",
                     margin: "1px",
                   },
-                  "& .state.Late": {
-                    backgroundColor: "tomato",
-                    margin: "1px",
-                  },
+                  // "& .state.Late": {
+                  //   backgroundColor: "tomato",
+                  //   color: "white",
+                  //   width: "10px",
+                  //   marginTop: "5px",
+                  //   marginBottom: "5px",
+                  //   borderRadius: "5px",
+                  // },
                 }}
                 rows={tasks}
                 columns={columns}

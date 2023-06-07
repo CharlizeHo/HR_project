@@ -1,20 +1,42 @@
 import { Link } from "react-router-dom";
-import "./style.css";
+import { useState } from "react";
 
 const NotFound = () => {
+  const [isHover, setIsHover] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHover(!isHover);
+  };
   return (
     <>
-      <div className="wrap-container">
-        <div className="container">
-          <div className="content">
-            <p className="content-404">404</p>
-            <p className="content-text">Sorry we couldn't find this page.</p>
-            <p>But dont worry, you can find other things on our homepage.</p>
-            <Link to="/" className="link">
+      <div
+        className="d-flex align-items-center vh-100 vw-100"
+        style={{ backgroundColor: "rgb(241, 235, 235)" }}
+      >
+        <div className="d-md-flex align-items-center justify-content-center mx-auto ">
+          <div style={{ color: "rgb(58, 55, 55)" }}>
+            <p className="fw-bold fs-1">404</p>
+            <p className="fw-light fs-2">Sorry we couldn't find this page.</p>
+            <p className="mb-3">
+              But dont worry, you can find other things on our homepage.
+            </p>
+            <Link
+              to="/"
+              className="text-reset text-decoration-none p-2 shadow rounded"
+              style={{
+                backgroundColor: "rgb(241, 235, 235)",
+                fontWeight: "600",
+                fontSize: "small",
+                backgroundColor: isHover
+                  ? "rgb(213, 221, 249)"
+                  : "rgb(241, 235, 235)",
+              }}
+              onMouseOver={handleMouseOver}
+            >
               Back to Homepage
             </Link>
           </div>
-          <div className="notfound-img">
+          <div>
             <svg
               id="Layer_1"
               data-name="Layer 1"
