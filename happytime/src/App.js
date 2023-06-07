@@ -24,6 +24,7 @@ import EditUser from './Admin/controller/user/EditUser';
 import Task from './Admin/pages/task/task';
 import AddTask from './Admin/controller/task/AddTask';
 import EditTask from './Admin/controller/task/EditTask';
+import Usertask from './Admin/pages/usertask/usertask';
 import ListNhanVien from "./Client/pages/HRM/ListNhanVien";
 
 const MenuCtx = React.createContext({
@@ -101,7 +102,7 @@ class App extends React.Component {
                 <Route exact path="/admin/task" element={<Task />} />
                 <Route exact path="/admin/task/add" element={<AddTask />} />
                 <Route exact path="/admin/task/edittask/:id" element={<EditTask />} />
-                
+                <Route exact path="/admin/usertask" element={<Usertask />} />
               </Route>
             </Routes>
           </MenuCtx.Provider>

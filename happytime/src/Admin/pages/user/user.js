@@ -43,20 +43,20 @@ export default function User() {
 
   return (
     <div className='container'>
-      <h2>Quản lý người dùng</h2>
+      <h2>User Management</h2>
       <div className="row mb-3">
         <div className="col-md-6">
           <div className="filter-container d-flex">
-            <label htmlFor="filter" style={{ alignSelf: "bottom"}}>Hiển thị:</label>
+            <label htmlFor="filter" style={{ alignSelf: "bottom"}}>Show:</label>
             <select id="filter" className="form-select mx-3 w-50" value={filterOption} onChange={handleFilterChange}>
-              <option value="Tất cả">Tất cả</option>
-              <option value="Đang hoạt động">Đang hoạt động</option>
-              <option value="Không hoạt động">Không hoạt động</option>
+              <option value="Tất cả">All</option>
+              <option value="Đang hoạt động">Active</option>
+              <option value="Không hoạt động">Inactive</option>
             </select>
           </div>
         </div>
         <div className="col-md-6 text-end">
-          <Link className='btn btn-add btn-primary' to="/admin/user/add">+ Thêm</Link>
+          <Link className='btn btn-add btn-primary' to="/admin/user/add">+ Add</Link>
         </div>
       </div>
       
@@ -64,17 +64,17 @@ export default function User() {
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope='col'>Tên đăng nhập</th>
-            <th scope="col">Họ và tên</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Giới tính</th>
-            <th scope="col">Địa chỉ</th>
-            <th scope="col">Số điện thoại</th>
+            <th scope='col'>Username</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Birthdate</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone number</th>
             <th scope="col">Email</th>
             {/* <th scope="col">Mật khẩu</th> */}
-            <th scope="col">Phòng ban</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Thao tác</th>
+            <th scope="col">Department</th>
+            <th scope="col">State</th>
+            <th scope="col">Operation</th>
           </tr>
         </thead>
         <tbody>
@@ -92,14 +92,14 @@ export default function User() {
               <td>{user?.department.id}</td>
               <td>
                 {user?.user_isActivity ? (
-                  <span className="badge rounded-pill text-bg-success">Đang hoạt động</span>
+                  <span className="badge rounded-pill text-bg-success">Active</span>
                 ) : (
-                  <span className="badge rounded-pill text-bg-secondary">Không hoạt động</span>
+                  <span className="badge rounded-pill text-bg-secondary">Inactive</span>
                 )}
               </td>
               <td>
                 <Link className="btn btn-edit btn-success mx-2" to={`/admin/user/edituser/${user?.user_id}`}>
-                  Sửa
+                  Edit
                 </Link>
                 /
                 <button
@@ -107,7 +107,7 @@ export default function User() {
                   className="btn btn-delete btn-danger mx-2"
                   onClick={() => deleteUser(user?.user_id)}
                 >
-                  Xóa
+                  Delete
                 </button>
               </td>
             </tr>

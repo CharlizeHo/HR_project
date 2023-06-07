@@ -8,8 +8,7 @@
   background-color: rgba(248, 247, 247, 0.735);
   /* margin: 65px 85px 0px 65px; */
   padding-bottom: 40px;
-  width: 95%;
-  overflow-x: scroll;
+  width: 100%;
 }
 
 @media all and (max-width: 780px) {

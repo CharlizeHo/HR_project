@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Task")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("http://localhost:3000")
 public class TaskController {
 
     long millis=System.currentTimeMillis();

@@ -45,7 +45,7 @@ export default function Department() {
 
   return (
     <div className='container container-department'>
-      <h2>Quản lý phòng ban</h2>
+      <h2>Department Management</h2>
       <div style={{ float: 'right', marginBottom: '10px' }}>
         <Link className='btn btn-add btn-primary' to='/admin/department/add'>
           +Thêm
@@ -56,8 +56,8 @@ export default function Department() {
         <thead>
           <tr>
             <th scope='col'>ID</th>
-            <th scope='col'>Tên phòng ban</th>
-            <th scope='col'>Thao tác</th>
+            <th scope='col'>Name</th>
+            <th scope='col'>Operation</th>
           </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@ export default function Department() {
                   className='btn btn-edit btn-success mx-2'
                   to={`/admin/department/editdepartment/${department?.id}`}
                 >
-                  Sửa
+                  Edit
                 </Link>
                 /
                 <button
@@ -78,7 +78,7 @@ export default function Department() {
                   className='btn btn-delete btn-danger mx-2'
                   onClick={() => handleDeleteClick(department?.id)}
                 >
-                  Xóa
+                  Delete
                 </button>
               </td>
             </tr>
@@ -91,20 +91,20 @@ export default function Department() {
       {showConfirmDialog && (
         <div className='modal-overlay'>
           <div className='modalContainer'>
-            <h3>Xác nhận</h3>
-            <p>Bạn có chắc chắn muốn xóa phòng ban này?</p>
+            <h3>Confirm</h3>
+            <p>Are you sure to delete this department?</p>
             <div>
               <button
                 className='btn btn-confirm btn-danger'
                 onClick={handleConfirmDelete}
               >
-                Xóa
+                Delete
               </button>
               <button
                 className='btn btn-cancel btn-secondary'
                 onClick={handleCancelDelete}
               >
-                Hủy
+                Cancel
               </button>
             </div>
           </div>

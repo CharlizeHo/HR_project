@@ -62,6 +62,7 @@ public class UserController {
                     user1.setUser_birthdate(user.getUser_birthdate());
                     user1.setUser_gender(user.getUser_gender());
                     user1.setUser_phonenum(user.getUser_phonenum());
+                    user1.setUser_isActivity(user.getUser_isActivity());
 //                    user1.setDepartment(user.getDepartment());
                     user1.setUser_mod_date(date);
                     return userReponsitory.save(user1);

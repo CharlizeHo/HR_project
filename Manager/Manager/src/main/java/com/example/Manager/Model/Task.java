@@ -1,10 +1,7 @@
 package com.example.Manager.Model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +10,8 @@ import java.util.List;
 @Entity
 @Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task implements  Serializable {

@@ -1,7 +1,6 @@
 package com.example.Manager.Controller;
 
 import com.example.Manager.DTO.AllCountTask;
-import com.example.Manager.DTO.ListUserTask;
 import com.example.Manager.Model.StateTask;
 import com.example.Manager.Model.Task;
 import com.example.Manager.Model.UserTask;
@@ -13,9 +12,7 @@ import com.example.Manager.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/userTask")
@@ -76,6 +73,7 @@ public class UserTaskController {
         return userTaskRepository.findAll();
     }
 
+
     long millis=System.currentTimeMillis();
     // creating a new object of the class Date
     java.sql.Date date = new java.sql.Date(millis);
@@ -116,6 +114,16 @@ public class UserTaskController {
 //        AllCountTask countTask = new AllCountTask(100,fail,doing,4,late,finish);
         return userTaskService.getNumberALLStateTask();
     }
+
+    @DeleteMapping("/deleteUserTask/{id}")
+    String deleteUserTask (@PathVariable int id){
+        if (!userTaskRepository.existsById(id)) {
+            throw new UserNotFoundException(id);
+        }
+        userTaskRepository.deleteById(id);
+        return "Deleted successfully";
+    }
+
 
 
 }

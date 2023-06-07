@@ -160,7 +160,7 @@ export default function AddTask() {
                             </div>
 
                             <div className='col-md-6'>
-<div className="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="birthdate" className="form-label">
                                         Ngày bắt đầu:
                                     </label>
@@ -174,7 +174,7 @@ export default function AddTask() {
                                     />
                                 </div>
 
-                                
+
 
                                 <div className="mb-3">
                                     <label htmlFor="extensiontime" className="form-label">
@@ -192,7 +192,7 @@ export default function AddTask() {
 
                             <div className='col-md-6'>
 
-                            <div className="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="deadline" className="form-label">
                                         Deadline:
                                     </label>
@@ -205,8 +205,8 @@ export default function AddTask() {
                                         required
                                     />
                                 </div>
-                                
-                            <div className="mb-3">
+
+                                <div className="mb-3">
                                     <label htmlFor="user_creTask" className="form-label">
                                         Người tạo:
                                     </label>

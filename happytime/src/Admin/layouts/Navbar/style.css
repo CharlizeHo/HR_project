@@ -8,7 +8,10 @@
   padding-left: 10px;
   font-weight: bold;
 }
-
+.btn-task{
+  height: 40.5px;
+  color: rgb(160, 161, 161);
+}
 .btn-logout:hover{
   color: orange;
 }

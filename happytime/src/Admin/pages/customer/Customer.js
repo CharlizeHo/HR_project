@@ -39,21 +39,21 @@ export default function Customer() {
 
   return (
     <div className='container container-customer'>
-      <h2 >Quản lý khách hàng</h2>
+      <h2 >Customer Management</h2>
       <div style={{ float: "right", marginBottom: "10px" }}>
-        <Link className='btn btn-add btn-primary' to="/admin/customer/add">+Thêm</Link>
+        <Link className='btn btn-add btn-primary' to="/admin/customer/add">+ Add</Link>
       </div>
 
       <table class="table table-striped table-hover shadow">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">Tên khách hàng</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Địa chỉ</th>
-            <th scope="col">Ngày tạo</th>
-            <th scope="col">Ngày chỉnh sửa</th>
-            <th scope="col">Thao tác</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Address</th>
+            <th scope="col">Created in</th>
+            <th scope="col">Edited in</th>
+            <th scope="col">Operation</th>
           </tr>
         </thead>
         <tbody>
@@ -67,9 +67,9 @@ export default function Customer() {
                 <td>{customer?.customer_address}</td>
                 <td>{customer?.customer_cre_date}</td>
                 <td>{customer?.customer_mod_date}</td>
-                <td><Link className="btn btn-edit btn-success mx-2" to={`/admin/customer/editcustomer/${customer?.customer_id}`} >Sửa</Link>
+                <td><Link className="btn btn-edit btn-success mx-2" to={`/admin/customer/editcustomer/${customer?.customer_id}`} >Edit</Link>
                   /
-                  <button type="button" class="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(customer?.customer_id)}>Xóa</button></td>
+                  <button type="button" class="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(customer?.customer_id)}>Delete</button></td>
               </tr>
             ))
           }
@@ -80,20 +80,20 @@ export default function Customer() {
       {showConfirmDialog && (
         <div className='modal-overlay'>
           <div className='modalContainer'>
-            <h3>Xác nhận</h3>
-            <p>Bạn có chắc chắn muốn xóa khách hàng này?</p>
+            <h3>Confirm</h3>
+            <p>Are you sure to delete this customer?</p>
             <div>
               <button
                 className='btn btn-confirm btn-danger'
                 onClick={handleConfirmDelete}
               >
-                Xóa
+                Delete
               </button>
               <button
                 className='btn btn-cancel btn-secondary'
                 onClick={handleCancelDelete}
               >
-                Hủy
+                Cancel
               </button>
             </div>
           </div>

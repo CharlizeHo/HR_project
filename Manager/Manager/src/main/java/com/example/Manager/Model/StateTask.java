@@ -11,6 +11,6 @@ public enum StateTask {
     Doing,
     Finish,
     Late,
-    Waitting,
+    Waiting,
     Fail
 }
