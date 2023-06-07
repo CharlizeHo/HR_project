@@ -1,79 +1,105 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-import Form from "react-bootstrap/Form";
+import {
+  DataGrid,
+  GridCheckIcon,
+  GridCloseIcon,
+  GridToolbar,
+  gridClasses,
+} from "@mui/x-data-grid";
+import clsx from "clsx";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import Form from "react-bootstrap/Form";
 
 const ListNhanVien = () => {
   const columns = [
     {
-      field: "id",
+      field: "user_id",
       headerName: "ID",
       headerClassName: "header",
       flex: 0.5,
     },
     {
       field: "user_fullName",
-      headerName: "Tên nhân viên",
+      headerName: "FullName",
       headerClassName: "header",
-      flex: 2,
+      flex: 1.5,
     },
     {
       field: "user_email",
       headerName: "Email",
       headerClassName: "header",
-      flex: 2,
+      flex: 1.5,
     },
     {
-      field: "department.department",
-      headerName: "Phòng ban",
+      field: "departmentName",
+      headerName: "Department",
+      headerClassName: "header",
+      valueGetter: getDepartment,
+      flex: 1,
+      cellClassName: (params) => {
+        return clsx("department", {
+          HR: params.value == "Department HR",
+          FrontEnd: params.value == "Department FrontEnd",
+          BackEnd: params.value == "Department BackEnd",
+        });
+      },
+    },
+    {
+      field: "user_isActivity",
+      headerName: "Employee's State",
       headerClassName: "header",
       flex: 1,
+      renderCell: (params) => {
+        return params.value ? (
+          <span>
+            <GridCheckIcon style={{ color: "green" }} /> Available
+          </span>
+        ) : (
+          <span>
+            <GridCloseIcon style={{ color: "red" }} /> Unavailable
+          </span>
+        );
+      },
     },
   ];
 
+  function getDepartment(params) {
+    return `${params.row.department.departmentName}`;
+  }
+
   const [users, setUsers] = useState([]);
 
-  const { id } = useParams();
   useEffect(() => {
-    axios
-      // .get("https://dummyjson.com/users")
-      .get("http://localhost:8080/api/v1/auth/UserCol/listuser")
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+    GetUsers();
+  }, []);
+
+  const GetUsers = async () => {
+    const result = await axios.get(
+      "http://localhost:8080/api/v1/auth/UserCol/getUser"
+    );
+    console.log(result.data);
+    setUsers(result.data);
+  };
+
   return (
     <div className="profile-container vh-100">
       <div className="list-content">
         <h6 className="pl-3 pt-3" style={{ color: "orange" }}>
-          DANH SÁCH NHÂN VIÊN
+          LIST OF EMPLOYEES
         </h6>
         <div className="list-wrap-container-task">
-          <div>
-            <Form.Select className="list-select-items">
-              <option>Trạng thái hoạt động</option>
-              <option value="1">Tất cả</option>
-              <option value="2">Mở</option>
-              <option value="3">Đóng</option>
-            </Form.Select>
-          </div>
-          <div>
-            <Form.Select className="list-select-items">
-              <option>Phòng ban</option>
-              <option value="1">Tất cả</option>
-              <option value="2">FrontEnd</option>
-              <option value="3">BackEnd</option>
-              <option value="4">HR</option>
-            </Form.Select>
-          </div>
+          <Form.Select className="list-select-items" defaultValue={"default"}>
+            <option disabled value="default">
+              Choose a Department
+            </option>
+            <option value="1">HR</option>
+            <option value="2">BackEnd</option>
+            <option value="3">FrontEnd</option>
+          </Form.Select>
         </div>
         <div className="mt-2 mx-3" style={{ maxHeight: "400px" }}>
           <DataGrid
-            getRowId={(row) => row.statId}
+            getRowId={(row) => row.user_id}
             getRowHeight={() => "auto"}
             initialState={{
               pagination: { paginationModel: { pageSize: 5 } },
@@ -102,6 +128,18 @@ const ListNhanVien = () => {
               "& .header": {
                 backgroundColor: "orange",
                 fontWeight: "700px",
+              },
+              "& .department.HR": {
+                backgroundColor: "linen",
+                margin: "1px",
+              },
+              "& .department.FrontEnd": {
+                backgroundColor: "lightpink",
+                margin: "1px",
+              },
+              "& .department.BackEnd": {
+                backgroundColor: "lightblue",
+                margin: "1px",
               },
             }}
           />
