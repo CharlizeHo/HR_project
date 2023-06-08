@@ -3,11 +3,22 @@ import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import Chip from "@mui/material/Chip";
 import clsx from "clsx";
 import axios from "axios";
-import Form from "react-bootstrap/Form";
 import "./style.css";
-import { red } from "@mui/material/colors";
+import { blue, green, grey, red } from "@mui/material/colors";
 
 const ListTask = () => {
+  function getChipProps(params) {
+    switch (params) {
+      case "Finish":
+        return green;
+      case "Doing":
+        return blue;
+      case "Late":
+        return red;
+      default:
+        return grey;
+    }
+  }
   const columns = [
     {
       field: "task_id",
@@ -56,29 +67,22 @@ const ListTask = () => {
       headerName: "Task's State",
       headerClassName: "header",
       flex: 0.8,
-      cellClassName: (params) => {
+      renderCell: (params) => {
         return (
           <Chip
+            label={params.value}
             variant="outlined"
             size="small"
-            color="warning"
-            {...getChipProps(params)}
+            style={{
+              backgroundColor: getChipProps(params.value)[300],
+              color: "white",
+            }}
           />
         );
       },
     },
   ];
 
-  function getChipProps(params) {
-    if (params.value === "Late") {
-      return {
-        label: params.value,
-        style: {
-          borderColor: red[500],
-        },
-      };
-    }
-  }
   function getTaskID(params) {
     return `${params.row.userTaskId}`;
   }
@@ -113,49 +117,19 @@ const ListTask = () => {
           <h6 className="pl-3 pt-3" style={{ color: "orange" }}>
             LIST OF TASKS
           </h6>
-          <div className="list-wrap-container-task">
-            <div>
-              <Form.Select
-                className="list-select-items"
-                defaultValue={"default"}
-              >
-                <option disabled value="default">
-                  Choose a Department
-                </option>
-                <option value="1">HR</option>
-                <option value="2">BackEnd</option>
-                <option value="3">FrontEnd</option>
-              </Form.Select>
-            </div>
-            <div>
-              <Form.Select
-                className="list-select-items"
-                name="Task's State"
-                defaultValue={"default"}
-              >
-                <option disabled value="default">
-                  Choose a task's state
-                </option>
-                <option value="1">Open</option>
-                <option value="2">Doing</option>
-                <option value="3">Finish</option>
-                <option value="4">Late</option>
-              </Form.Select>
-            </div>
-          </div>
-          <div>
+
+          <div className="mt-4">
             <div
-              className="mt-2 mx-3"
-              style={{ maxHeight: "400px", overflow: "scroll" }}
+              className=" mx-3"
+              style={{ maxHeight: "450px", overflow: "scroll" }}
             >
               <DataGrid
                 getRowId={(row) => row.userTaskId}
                 getRowHeight={() => "auto"}
                 initialState={{
-                  pagination: { paginationModel: { pageSize: 5 } },
+                  pagination: { paginationModel: { pageSize: 6 } },
                   filter: { filterModel: { items: [] } },
                 }}
-                disableColumnFilter
                 disableColumnSelector
                 disableDensitySelector
                 slots={{ toolbar: GridToolbar }}
@@ -184,14 +158,6 @@ const ListTask = () => {
                     backgroundColor: "lightblue",
                     margin: "1px",
                   },
-                  // "& .state.Late": {
-                  //   backgroundColor: "tomato",
-                  //   color: "white",
-                  //   width: "10px",
-                  //   marginTop: "5px",
-                  //   marginBottom: "5px",
-                  //   borderRadius: "5px",
-                  // },
                 }}
                 rows={tasks}
                 columns={columns}

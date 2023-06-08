@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../Components/common/logo.png";
+import logo from "../../components/common/logo.png";
 import Validation from "./LoginValidation";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -27,9 +27,17 @@ const LoginForm = () => {
       .post("http://localhost:8080/api/v1/auth/authenticate", user)
       .then((res) => {
         const token = res.data.token;
-        localStorage.setItem("token", token);
-        console.log(res.data);
+
+        // console.log(res.data);
         // const authority = res.data.role[0].authority;
+
+        const user = {
+          userName: res.data.userName,
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", token);
+
         navigate("/home");
       })
       .catch((err) => console.log(err));

@@ -89,11 +89,6 @@
   background-color: rgb(240 240 240 / var(--tw-bg-opacity));
 }
 
-.btn-text-wrap {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
 
 .btn-bold-text {
   font-weight: 700px;
