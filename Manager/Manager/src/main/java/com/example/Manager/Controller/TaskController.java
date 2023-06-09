@@ -65,9 +65,7 @@ Task updateTask(@RequestBody Task newTask, @PathVariable int id){
         task.setTask_start(newTask.getTask_start());
         task.setTask_end(newTask.getTask_end());
         task.setExtension_time(newTask.getExtension_time());
-        task.setTask_mod_date(new Date());
-        task.setUser_creTask(newTask.getUser_creTask());
-        task.setCustomer(newTask.getCustomer());
+        task.setTask_mod_date(date);
         return taskRepository.save((task));
     }).orElseThrow(() -> new UserNotFoundException(id));
 }
