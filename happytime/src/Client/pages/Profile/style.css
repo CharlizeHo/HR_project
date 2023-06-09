@@ -19,7 +19,7 @@
 
 .btn-change-avatar {
   margin: 0 auto;
-  max-width: 70%;
+  width: 45%;
   margin-top: 10px;
   background-color: #ffa500;
   border-color: #ffa500;
@@ -51,7 +51,7 @@
   background-color: #ffa500;
   border-radius: 20px;
   border: 5px solid #ffa500;
-  width: 8%;
+  width: 20%;
   cursor: pointer;
 }
 

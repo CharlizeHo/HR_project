@@ -87,22 +87,13 @@ const ListNhanVien = () => {
         <h6 className="pl-3 pt-3" style={{ color: "orange" }}>
           LIST OF EMPLOYEES
         </h6>
-        <div className="list-wrap-container-task">
-          <Form.Select className="list-select-items" defaultValue={"default"}>
-            <option disabled value="default">
-              Choose a Department
-            </option>
-            <option value="1">HR</option>
-            <option value="2">BackEnd</option>
-            <option value="3">FrontEnd</option>
-          </Form.Select>
-        </div>
-        <div className="mt-2 mx-3" style={{ maxHeight: "400px" }}>
+
+        <div className="mt-4 mx-3" style={{ maxHeight: "400px" }}>
           <DataGrid
             getRowId={(row) => row.user_id}
             getRowHeight={() => "auto"}
             initialState={{
-              pagination: { paginationModel: { pageSize: 5 } },
+              pagination: { paginationModel: { pageSize: 6 } },
               filter: {
                 filterModel: {
                   items: [],

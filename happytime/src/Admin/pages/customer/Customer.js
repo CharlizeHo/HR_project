@@ -44,7 +44,7 @@ export default function Customer() {
         <Link className='btn btn-add btn-primary' to="/admin/customer/add">+ Add</Link>
       </div>
 
-      <table class="table table-striped table-hover shadow">
+      <table className="table table-striped table-hover shadow">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -69,7 +69,7 @@ export default function Customer() {
                 <td>{customer?.customer_mod_date}</td>
                 <td><Link className="btn btn-edit btn-success mx-2" to={`/admin/customer/editcustomer/${customer?.customer_id}`} >Edit</Link>
                   /
-                  <button type="button" class="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(customer?.customer_id)}>Delete</button></td>
+                  <button type="button" className="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(customer?.customer_id)}>Delete</button></td>
               </tr>
             ))
           }

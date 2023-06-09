@@ -5,6 +5,7 @@ import Sidebar from "./SideMenu/Sidebar";
 
 export default () => {
   const [isOpen, setOpen] = useState(false);
+
   return (
     <div>
       <div>

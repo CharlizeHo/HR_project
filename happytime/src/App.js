@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./Client/pages/Home/Home";
-import ListTask from "./Client//pages/ListTask/ListTask";
+import ListTask from "./Client/pages/ListTask/ListTask";
 import NotFound from "./Client/pages/NotFound/NotFound";
-import Layout from "./Client/Components/layouts/layout";
+import Layout from "./Client/components/layouts/layout";
 import LoginForm from "./Client/pages/Login/LoginForm";
 import "./App.css";
 import Profile from "./Client/pages/Profile/profile";
@@ -15,21 +15,30 @@ import AddCustomer from "./Admin/controller/customer/AddCustomer";
 import EditCustomer from "./Admin/controller/customer/EditCustomer";
 import AddDepartment from "./Admin/controller/department/AddDepartment";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import EditDepartment from './Admin/controller/department/EditDepartment';
-import LayoutAdmin from './Admin/layouts/layout';
-import User from './Admin/pages/user/user';
-import AddUser from './Admin/controller/user/AddUser';
-import EditUser from './Admin/controller/user/EditUser';
-import Task from './Admin/pages/task/task';
-import AddTask from './Admin/controller/task/AddTask';
-import EditTask from './Admin/controller/task/EditTask';
-import Usertask from './Admin/pages/usertask/usertask';
+import EditDepartment from "./Admin/controller/department/EditDepartment";
+import LayoutAdmin from "./Admin/layouts/layout";
+import User from "./Admin/pages/user/user";
+import AddUser from "./Admin/controller/user/AddUser";
+import EditUser from "./Admin/controller/user/EditUser";
+import Task from "./Admin/pages/task/task";
+import AddTask from "./Admin/controller/task/AddTask";
+import EditTask from "./Admin/controller/task/EditTask";
+import Usertask from "./Admin/pages/usertask/usertask";
 import ListNhanVien from "./Client/pages/HRM/ListNhanVien";
+import { setAuthToken } from "./Client/auth/setAuthToken";
 
 const MenuCtx = React.createContext({
   isNavOpen: true,
 });
 
+const token = localStorage.getItem("token");
+if (token) {
+  setAuthToken(token);
+}
+
+// const logout = () => {
+//   AuthService.logout();
+// };
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +69,11 @@ class App extends React.Component {
                 <Route path="/profile" element={<Profile />} />
               </Route>
 
-              <Route path="/admin" element={<LayoutAdmin />}>
+              <Route
+                path="/admin"
+                element={<LayoutAdmin />}
+                // allowedRole={ADMIN}
+              >
                 <Route
                   exact
                   path="/admin/department"
@@ -96,7 +109,11 @@ class App extends React.Component {
                 />
                 <Route exact path="/admin/task" element={<Task />} />
                 <Route exact path="/admin/task/add" element={<AddTask />} />
-                <Route exact path="/admin/task/edittask/:id" element={<EditTask />} />
+                <Route
+                  exact
+                  path="/admin/task/edittask/:id"
+                  element={<EditTask />}
+                />
                 <Route exact path="/admin/usertask" element={<Usertask />} />
               </Route>
             </Routes>

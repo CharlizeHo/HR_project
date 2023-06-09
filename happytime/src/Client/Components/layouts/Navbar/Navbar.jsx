@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import logo from "../../common/image/logo.png";
+import logo from "../../common/logo.png";
 import "./style.css";
 import { NavLink } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
-import Person from "./Person/Person";
+import Person from "./Person";
 import { Modal } from "react-bootstrap";
 
 function Navbar({ isOpen = false, setOpen = () => {} }) {
@@ -26,7 +26,7 @@ function Navbar({ isOpen = false, setOpen = () => {} }) {
         <div className="nav-items-right">
           <button className="btn-1">
             <span className="noti-icon">
-              <i class="fa-solid fa-bell"></i>
+              <i className="fa-solid fa-bell"></i>
             </span>
           </button>
 
