@@ -91,6 +91,20 @@ public class UserTaskController {
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
+    @PostMapping("/fail-task/{id}")
+    UserTask failTask(@PathVariable int id){
+        UserTask userTask= userTaskRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
+
+//        Task task= userTask.getTask();
+//        StateTask stateTask= userTaskService.getStateFinishef(task,date);
+        return userTaskRepository.findById(id)
+                .map(submit->{
+                    submit.setState(StateTask.Fail);
+//                    submit.setTime_finished(date);
+                    return userTaskRepository.save(submit);
+                }).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     @GetMapping("/fillervalue")
     AllCountTask getCountTask(){
 //        final Set< UserTask > itemUserTask = new HashSet< >();

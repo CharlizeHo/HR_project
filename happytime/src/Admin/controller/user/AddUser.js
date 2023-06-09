@@ -93,19 +93,19 @@ export default function AddUser() {
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 shadow">
-          <h2>Thêm người dùng</h2>
+          <h2>Add user</h2>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="row">
               <div className="col-md-6">
 
                 <div className="mb-3">
                   <label htmlFor="fullName" className="form-label">
-                    Họ và tên:
+                    Full name:
                   </label>
                   <input
                     type="text"
                     className="form-control text-center"
-                    placeholder="Ví dụ: Nguyễn Võ Hoàng"
+                    placeholder="For example: Nguyễn Võ Hoàng"
                     name="fullName"
                     value={fullName}
                     onChange={(e) => onInputChange(e)}
@@ -115,7 +115,7 @@ export default function AddUser() {
 
                 <div className="mb-3">
                   <label htmlFor="birthdate" className="form-label">
-                    Ngày tháng năm sinh:
+                    Birthdate:
                   </label>
                   <input
                     type="date"
@@ -135,7 +135,7 @@ export default function AddUser() {
                     type="email"
                     className={`form-control text-center ${validEmail ? "" : "is-invalid"
                       }`}
-                    placeholder="Ví dụ: hr@gmail.com"
+                    placeholder="For example: hr@gmail.com"
                     name="email"
                     value={email}
                     onChange={(e) => onInputChange(e)}
@@ -153,7 +153,7 @@ export default function AddUser() {
 
                 <div className="mb-3">
                   <label htmlFor="gender" className="form-label">
-                    Giới tính:
+                    Gender:
                   </label>
                   <select
                     className="form-control text-center"
@@ -162,7 +162,7 @@ export default function AddUser() {
                     onChange={(e) => onInputChange(e)}
                     required
                   >
-                    <option>Chọn giới tính</option>
+                    <option>Choose gender</option>
                     <option value="1">Nam</option>
                     <option value="2">Nữ</option>
                     <option value="3">Khác</option>
@@ -171,12 +171,12 @@ export default function AddUser() {
 
                 <div className="mb-3">
                   <label htmlFor="phonenum" className="form-label">
-                    Số điện thoại:
+                    Phone number:
                   </label>
                   <input
                     type="text"
                     className="form-control text-center"
-                    placeholder="Ví dụ: 0123456789"
+                    placeholder="For example: 0123456789"
                     name="phonenum"
                     value={phonenum}
                     onChange={(e) => onInputChange(e)}
@@ -188,7 +188,7 @@ export default function AddUser() {
 
                 <div className="mb-3">
                   <label htmlFor="department" className="form-label">
-                    Phòng ban:
+                    Department:
                   </label>
                   <select
                     className="form-control text-center"
@@ -213,12 +213,12 @@ export default function AddUser() {
               <div className='col-md-12'>
               <div className="mb-3">
                   <label htmlFor="address" className="form-label">
-                    Địa chỉ:
+                    Address:
                   </label>
                   <input
                     type="text"
                     className="form-control text-center"
-                    placeholder="Ví dụ: Ho Chi Minh City"
+                    placeholder="For example: Ho Chi Minh City"
                     name="address"
                     value={address}
                     onChange={(e) => onInputChange(e)}
@@ -230,12 +230,12 @@ export default function AddUser() {
               <div className='col-md-6'>
               <div className="mb-3">
                   <label htmlFor="username" className="form-label">
-                    Tên đăng nhập:
+                    Username:
                   </label>
                   <input
                     type="text"
                     className="form-control text-center"
-                    placeholder="Ví dụ: wbjn123"
+                    placeholder="For example: wbjn123"
                     name="userName"
                     value={userName}
                     onChange={(e) => onInputChange(e)}
@@ -246,7 +246,7 @@ export default function AddUser() {
               <div className='col-md-6'>
               <div className="mb-3 row" style={{ marginTop: "-16px" }}>
                   <label htmlFor="password" className="col-form-label">
-                    Mật khẩu:
+                    Password:
                   </label>
                   <div className="input-group">
                     <input
@@ -274,13 +274,13 @@ export default function AddUser() {
 
               <div className="col-md-12 text-center">
                 <button type="submit" className="btn btn-outline-primary mt-2">
-                  Thêm
+                  Add
                 </button>
                 <Link
                   className="btn btn-outline-danger mx-2 mt-2"
                   to="/admin/user"
                 >
-                  Hủy
+                  Cancel
                 </Link>
               </div>
             </div>

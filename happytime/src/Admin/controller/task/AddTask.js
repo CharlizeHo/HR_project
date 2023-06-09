@@ -96,18 +96,18 @@ export default function AddTask() {
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2>Thêm công việc</h2>
+                    <h2>Add task</h2>
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="mb-3">
                                     <label htmlFor="task_name" className="form-label">
-                                        Tên công việc:
+                                        Task name:
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control text-center"
-                                        placeholder="Ví dụ: Make website"
+                                        placeholder="For example: Make website"
                                         name="task_name"
                                         value={task_name}
                                         onChange={(e) => onInputChange(e)}
@@ -120,7 +120,7 @@ export default function AddTask() {
                             <div className="col-md-6">
                                 <div className="mb-3">
                                     <label htmlFor="customer" className="form-label">
-                                        Khách hàng:
+                                        Customer:
                                     </label>
                                     <select
                                         className="form-control text-center"
@@ -129,7 +129,7 @@ export default function AddTask() {
                                         onChange={(e) => onInputChange(e)}
                                         required
                                     >
-                                        <option value="">Chọn khách hàng</option>
+                                        <option value="">Choose customer</option>
                                         {customers?.map((list_customer) => (
                                             <option
                                                 key={list_customer.customer_id}
@@ -145,12 +145,12 @@ export default function AddTask() {
                             <div className='col-md-12'>
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">
-                                        Mô tả:
+                                        Task description:
                                     </label>
                                     <textarea
                                         type="text"
                                         className="form-control text-center"
-                                        placeholder="Ví dụ: Create website with Navbar and Sidebar..."
+                                        placeholder="For example: Create website with Navbar and Sidebar..."
                                         name="task_description"
                                         value={task_description}
                                         onChange={(e) => onInputChange(e)}
@@ -162,7 +162,7 @@ export default function AddTask() {
                             <div className='col-md-6'>
                                 <div className="mb-3">
                                     <label htmlFor="birthdate" className="form-label">
-                                        Ngày bắt đầu:
+                                        Start date:
                                     </label>
                                     <input
                                         type="date"
@@ -178,7 +178,7 @@ export default function AddTask() {
 
                                 <div className="mb-3">
                                     <label htmlFor="extensiontime" className="form-label">
-                                        Kéo dài thời hạn:
+                                        Extension time:
                                     </label>
                                     <input
                                         type="date"
@@ -208,7 +208,7 @@ export default function AddTask() {
 
                                 <div className="mb-3">
                                     <label htmlFor="user_creTask" className="form-label">
-                                        Người tạo:
+                                        Created by:
                                     </label>
                                     <select
                                         className="form-control text-center"
@@ -217,7 +217,7 @@ export default function AddTask() {
                                         onChange={(e) => onInputChange(e)}
                                         required
                                     >
-                                        <option value="" disabled>Chọn người giao</option>
+                                        <option value="" disabled>Choose created person</option>
                                         {users?.map((list_user) => (
                                             <option
                                                 key={list_user.user_id}
@@ -234,13 +234,13 @@ export default function AddTask() {
 
                             <div className="col-md-12 text-center">
                                 <button type="submit" className="btn btn-outline-primary mt-2">
-                                    Thêm
+                                    Add
                                 </button>
                                 <Link
                                     className="btn btn-outline-danger mx-2 mt-2"
                                     to="/admin/task"
                                 >
-                                    Hủy
+                                    Cancel
                                 </Link>
                             </div>
                         </div>
