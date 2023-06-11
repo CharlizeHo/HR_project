@@ -7,6 +7,7 @@ import Person from "./Person";
 import { Modal } from "react-bootstrap";
 
 function Navbar({ isOpen = false, setOpen = () => {} }) {
+  // $("#test").hide();
   const toggle = () => setOpen(!isOpen);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
@@ -23,7 +24,7 @@ function Navbar({ isOpen = false, setOpen = () => {} }) {
           </NavLink>
         </div>
 
-        <div className="nav-items-right">
+        <div className="nav-items-right" id="test">
           <button className="btn-1">
             <span className="noti-icon">
               <i className="fa-solid fa-bell"></i>

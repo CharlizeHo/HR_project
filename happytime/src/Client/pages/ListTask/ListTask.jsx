@@ -4,21 +4,9 @@ import Chip from "@mui/material/Chip";
 import clsx from "clsx";
 import axios from "axios";
 import "./style.css";
-import { blue, green, grey, red } from "@mui/material/colors";
+import { blue, green, grey, orange, red } from "@mui/material/colors";
 
 const ListTask = () => {
-  function getChipProps(params) {
-    switch (params) {
-      case "Finish":
-        return green;
-      case "Doing":
-        return blue;
-      case "Late":
-        return red;
-      default:
-        return grey;
-    }
-  }
   const columns = [
     {
       field: "task_id",
@@ -39,7 +27,7 @@ const ListTask = () => {
       headerName: "Description",
       headerClassName: "header",
       valueGetter: getTaskDescription,
-      flex: 1.5,
+      flex: 1.2,
     },
     {
       field: "customer",
@@ -49,15 +37,22 @@ const ListTask = () => {
       flex: 1.2,
     },
     {
+      field: "assigned employee",
+      headerName: "Assigned Employee",
+      headerClassName: "header",
+      valueGetter: getAssignedEmployee,
+      flex: 1.2,
+    },
+    {
       field: "department",
       headerName: "Department",
       headerClassName: "header",
       valueGetter: getDepartment,
-      flex: 1.2,
+      flex: 1,
       cellClassName: (params) => {
         return clsx("department", {
           HR: params.value === "Department HR",
-          FrontEnd: params.value === "Department FontEnd",
+          FrontEnd: params.value === "Department FrontEnd",
           BackEnd: params.value === "Department BackEnd",
         });
       },
@@ -83,6 +78,20 @@ const ListTask = () => {
     },
   ];
 
+  function getChipProps(params) {
+    switch (params) {
+      case "Finish":
+        return green;
+      case "Doing":
+        return blue;
+      case "Late":
+        return orange;
+      case "Fail":
+        return red;
+      default:
+        return grey;
+    }
+  }
   function getTaskID(params) {
     return `${params.row.userTaskId}`;
   }
@@ -98,6 +107,9 @@ const ListTask = () => {
   function getDepartment(params) {
     return `${params.row.task.user_creTask.department.departmentName}`;
   }
+  function getAssignedEmployee(params) {
+    return `${params.row.user.user_fullName}`;
+  }
 
   const [tasks, setTasks] = useState([]);
 
@@ -107,8 +119,11 @@ const ListTask = () => {
 
   const GetTask = async () => {
     const result = await axios.get("http://localhost:8080/userTask/getAll");
+    console.log(result.data);
     setTasks(result.data);
   };
+
+  console.log(tasks);
 
   return (
     <div className="profile-container">
@@ -124,7 +139,7 @@ const ListTask = () => {
               style={{ maxHeight: "450px", overflow: "scroll" }}
             >
               <DataGrid
-                getRowId={(row) => row.userTaskId}
+                getRowId={(tasks) => tasks.userTaskId}
                 getRowHeight={() => "auto"}
                 initialState={{
                   pagination: { paginationModel: { pageSize: 6 } },

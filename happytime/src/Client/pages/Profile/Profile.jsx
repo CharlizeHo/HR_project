@@ -5,7 +5,7 @@ import "./style.css";
 
 const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState(
-    "https://via.placeholder.com/150x150"
+    "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
   );
 
   const { id } = useParams();
@@ -23,9 +23,11 @@ const Profile = () => {
 
   useEffect(() => {
     axios
+      // .get(`http://localhost:8080/api/v1/auth/UserCol/getUser/${id}`)
       .get("http://localhost:8080/api/v1/auth/UserCol/getUser/4")
       .then((res) => {
         const { data } = res;
+        // const { id } = data.userId;
         console.log(data);
         setUser(data);
       });

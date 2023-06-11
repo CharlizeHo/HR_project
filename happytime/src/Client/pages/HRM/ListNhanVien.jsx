@@ -6,9 +6,9 @@ import {
   GridToolbar,
   gridClasses,
 } from "@mui/x-data-grid";
-import clsx from "clsx";
 import axios from "axios";
-import Form from "react-bootstrap/Form";
+import clsx from "clsx";
+import { Chip } from "@mui/material";
 
 const ListNhanVien = () => {
   const columns = [
@@ -38,9 +38,9 @@ const ListNhanVien = () => {
       flex: 1,
       cellClassName: (params) => {
         return clsx("department", {
-          HR: params.value == "Department HR",
-          FrontEnd: params.value == "Department FrontEnd",
-          BackEnd: params.value == "Department BackEnd",
+          HR: params.value === "Department HR",
+          FrontEnd: params.value === "Department FrontEnd",
+          BackEnd: params.value === "Department BackEnd",
         });
       },
     },
@@ -51,17 +51,38 @@ const ListNhanVien = () => {
       flex: 1,
       renderCell: (params) => {
         return params.value ? (
-          <span>
-            <GridCheckIcon style={{ color: "green" }} /> Available
-          </span>
+          <Chip
+            icon={<GridCheckIcon style={{ color: "green" }} />}
+            label="Available"
+            variant="outlined"
+            style={{
+              backgroundColor: getChipProps(params.value)[300],
+              color: "green",
+            }}
+          />
         ) : (
-          <span>
-            <GridCloseIcon style={{ color: "red" }} /> Unavailable
-          </span>
+          <Chip
+            icon={<GridCloseIcon style={{ color: "gray" }} />}
+            label="Unavailable"
+            variant="outlined"
+            style={{
+              backgroundColor: getChipProps(params.value)[300],
+              color: "gray",
+            }}
+          />
         );
       },
     },
   ];
+
+  function getChipProps(params) {
+    switch (params) {
+      case "True":
+        return "green";
+      default:
+        return "#f5f5f5";
+    }
+  }
 
   function getDepartment(params) {
     return `${params.row.department.departmentName}`;
@@ -125,7 +146,7 @@ const ListNhanVien = () => {
                 margin: "1px",
               },
               "& .department.FrontEnd": {
-                backgroundColor: "lightpink",
+                backgroundColor: "lavender",
                 margin: "1px",
               },
               "& .department.BackEnd": {

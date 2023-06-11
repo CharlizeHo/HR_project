@@ -4,34 +4,29 @@ import { Chart } from "react-google-charts";
 
 const StatTable = () => {
   const data = [
-    ["Department", "Sớm", "Trễ", "Không hoàn thành"],
-    ["Mon", 7, 2, 1],
-    ["Tue", 8, 3, 3],
-    ["Wed", 6, 2, 2],
-    ["Thu", 8, 4, 0],
-    ["Fri", 9, 3, 0],
+    ["Department", "Finish", "Late", "Fail"],
+    ["Mon", 6, 2, 1],
+    ["Tue", 5, 3, 0],
+    ["Wed", 6, 2, 1],
+    ["Thu", 5, 4, 0],
+    ["Fri", 3, 3, 0],
   ];
 
   const options = {
-    title: "Số lượng",
+    title: "No. of tasks",
     curveType: "function",
     legend: { position: "bottom" },
   };
   return (
     <div className="stat-container">
-      <span style={{ fontWeight: "600" }}>Bảng thống kê</span>
+      <span style={{ fontWeight: "600" }}>Statistic Chart</span>
       <div className="d-flex mt-2">
         <Form.Select className="w-50 p-1">
-          <option>Phòng ban</option>
-          <option value="1">Sales</option>
-          <option value="2">IT</option>
-          <option value="3">HR</option>
+          <option>Department</option>
+          <option value="1">Department HR</option>
+          <option value="2">Department FrontEnd</option>
+          <option value="3">Department BackEnd</option>
         </Form.Select>
-        <input
-          type="datetime-local"
-          className="w-50 rounded-2 border border-2 "
-          style={{ marginLeft: "10px" }}
-        />
       </div>
       <div className="ml-lg-4" style={{ maxWidth: 600, marginTop: "10px" }}>
         <Chart
