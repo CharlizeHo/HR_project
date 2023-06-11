@@ -15,10 +15,7 @@ public interface TaskRepository extends JpaRepository<Task,Integer> {
 
 
     int countBySomeoneDidIt(boolean check);
-//    @Modifying
-//    @Query(value =
-//            "SELECT task.task_name, customer.customer_name\n" +
-//                    "FROM task\n" +
-//                    "JOIN customer ON task.customer_id = customer.customer_id;",nativeQuery = true)
-//    List<UserTask> getOOP();
+
+
+    List<Task> findBySomeoneDidIt(boolean b);
 }

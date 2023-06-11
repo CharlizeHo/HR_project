@@ -4,6 +4,7 @@ import com.example.Manager.Model.*;
 import com.example.Manager.Reponsittory.TaskRepository;
 import com.example.Manager.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -37,10 +38,16 @@ public class TaskController {
     }
 
     @GetMapping("/getTask")
+    List<Task> getTaskBySomeoneDidIt(){
+        List<Task> re= taskRepository.findBySomeoneDidIt(false);
+        System.out.println(re);
+        return re;
+    }
+
+    @GetMapping("/getTaskAll")
     List<Task> getAllTask(){
         return taskRepository.findAll();
     }
-
     @GetMapping("/getTask/{id}")
     Task getTaskbyId(@PathVariable int id){
         return taskRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
