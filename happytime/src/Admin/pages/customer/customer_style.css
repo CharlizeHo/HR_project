@@ -16,3 +16,32 @@ h2 {
     background-color: rgb(253, 175, 30) !important;
     border-color: rgb(253, 175, 30) !important;
 }
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  
+  .search-input {
+    padding: 7px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px;
+  }
+  
+  .fa-search {
+    margin-left: -30px;
+    font-size: 20px;
+    color: #777;
+  }
+  
+  .search-input:hover,
+  .search-input:focus {
+    border-color: #999;
+    outline: none;
+  }
+  

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-export default function Task() {
+export default function UserTask() {
   const [usertasks, setUsertasks] = useState(null);
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
   const [showCompleteConfirmDialog, setShowCompleteConfirmDialog] = useState(false);
@@ -11,6 +11,11 @@ export default function Task() {
   const [filterState, setFilterState] = useState('');
   const [isTaskCompleted, setIsTaskCompleted] = useState(false);
   const [completedTaskIds, setCompletedTaskIds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchFullNameQuery, setSearchFullNameQuery] = useState('');
+
 
   const { id } = useParams();
 
@@ -88,6 +93,17 @@ export default function Task() {
   const handleCancelFail = () => {
     setShowFailConfirmDialog(false);
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleFullNameSearchChange = (e) => {
+    setSearchFullNameQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
   const getBadgeClass = (state) => {
     switch (state) {
       case "Finish":
@@ -107,20 +123,48 @@ export default function Task() {
 
   const handleFilterChange = (e) => {
     setFilterState(e.target.value);
+    setCurrentPage(1);
   };
 
-  const filteredTasks = filterState ? usertasks?.filter(task => task.state === filterState) : usertasks;
+  const filteredTasks = filterState
+    ? usertasks?.filter(task => task.state === filterState)
+    : usertasks;
+
+  const searchedTasks = searchQuery
+    ? filteredTasks?.filter(task =>
+      task.task.task_name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    : filteredTasks;
+
+  const searchedFullNameTasks = searchFullNameQuery
+    ? searchedTasks?.filter(task =>
+      task.user.user_fullName.toLowerCase().includes(searchFullNameQuery.toLowerCase())
+    )
+    : searchedTasks;
+  const indexOfLastTask = currentPage * rowsPerPage;
+  const indexOfFirstTask = indexOfLastTask - rowsPerPage;
+  const currentTasks = searchedFullNameTasks?.slice(indexOfFirstTask, indexOfLastTask);
+  const totalPages = Math.ceil(searchedFullNameTasks?.length / rowsPerPage);
+
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
   return (
     <div className='container container-task'>
       <h2>Assigned Task Management</h2>
 
-      <div className="filter filter-container d-flex">
+      <div className="filter filter-container d-flex" style={{ marginTop: "30px" }}>
         <label htmlFor="filterState">Show:</label>
         <select
           id="filterState"
           className="form-select mx-3"
-          style={{ maxWidth: "20%" }}
+          style={{ maxWidth: "13%" }}
           value={filterState}
           onChange={handleFilterChange}
         >
@@ -131,6 +175,28 @@ export default function Task() {
           <option value="Fail">Fail</option>
           {/* <option value="Waiting">Waiting</option> */}
         </select>
+
+        <div>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search by task name"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <i className="fa fa-search"></i>
+        </div>
+
+        <div className='mx-4'>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search by person-in-charge"
+            value={searchFullNameQuery}
+            onChange={handleFullNameSearchChange}
+          />
+          <i className="fa fa-search"></i>
+        </div>
       </div>
 
       <table className="table table-striped table-hover shadow" style={{ marginTop: "30px" }}>
@@ -143,12 +209,12 @@ export default function Task() {
             <th scope="col">Deadline</th>
             <th scope="col">Time finished</th>
             <th scope="col">State</th>
-            <th scope="col">Operation</th>
             <th scope="col">Completion</th>
+            <th scope="col">Operation</th>
           </tr>
         </thead>
         <tbody>
-          {filteredTasks?.map((usertask) => (
+          {currentTasks?.map((usertask) => (
             <tr key={usertask.userTaskId}>
               <td>{usertask?.userTaskId}</td>
               <td>{usertask?.task.task_name}</td>
@@ -163,15 +229,7 @@ export default function Task() {
                   </span>
                 )}
               </td>
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-delete btn-danger mx-2"
-                  onClick={() => handleDeleteClick(usertask?.userTaskId)}
-                >
-                  Delete
-                </button>
-              </td>
+
               <td>
                 <button
                   type="button"
@@ -191,10 +249,51 @@ export default function Task() {
                   <i className='fa fa-xmark'></i>
                 </button>
               </td>
+
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-delete btn-danger mx-2"
+                  onClick={() => handleDeleteClick(usertask?.userTaskId)}
+                >
+                  <i className='fa fa-trash'></i>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <div className="pagination-container">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination justify-content-center">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={handlePrevPage} disabled={currentPage === 1}>
+                Previous
+              </button>
+            </li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li
+                key={index + 1}
+                className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}
+              >
+                <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button
+                className="page-link"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
       {showDeleteConfirmDialog && (
         <div className='modal-overlay'>

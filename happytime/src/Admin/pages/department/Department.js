@@ -48,7 +48,7 @@ export default function Department() {
       <h2>Department Management</h2>
       <div style={{ float: 'right', marginBottom: '10px' }}>
         <Link className='btn btn-add btn-primary' to='/admin/department/add'>
-          +Thêm
+        <i class="fa-solid fa-calendar-plus"></i>
         </Link>
       </div>
 
@@ -70,7 +70,7 @@ export default function Department() {
                   className='btn btn-edit btn-success mx-2'
                   to={`/admin/department/editdepartment/${department?.id}`}
                 >
-                  Edit
+                  <i className='fa fa-pen'></i>
                 </Link>
                 /
                 <button
@@ -78,7 +78,7 @@ export default function Department() {
                   className='btn btn-delete btn-danger mx-2'
                   onClick={() => handleDeleteClick(department?.id)}
                 >
-                  Delete
+                  <i className='fa fa-trash'></i>
                 </button>
               </td>
             </tr>

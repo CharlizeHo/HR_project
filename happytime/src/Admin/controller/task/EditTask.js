@@ -39,6 +39,7 @@ export default function AddTask() {
     someoneDidIt: false,
     user_creTask: {
       user_id: 0,
+      user_fullName: "",
       role: "",
     },
     customer: {
@@ -143,6 +144,7 @@ export default function AddTask() {
                     value={customer.customer_id}
                     onChange={(e) => onInputChange(e)}
                     required
+                    disabled
                   >
                     <option value="">Choose customer</option>
                     {customers?.map((list_customer) => (
@@ -199,7 +201,6 @@ export default function AddTask() {
                     name="extension_time"
                     value={extension_time}
                     onChange={(e) => onInputChange(e)}
-                    required
                   />
                 </div>
               </div>
@@ -229,6 +230,7 @@ export default function AddTask() {
                     value={user_creTask.user_id}
                     onChange={(e) => onInputChange(e)}
                     required
+                    
                   >
                     <option value="" disabled>
                       Select created person

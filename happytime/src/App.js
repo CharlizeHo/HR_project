@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Client/pages/Home/Home";
 import ListTask from "./Client/pages/ListTask/ListTask";
 import NotFound from "./Client/pages/NotFound/NotFound";
-import Layout from "./Client/components/layouts/layout";
+import Layout from "./Client/Components/layouts/layout";
 import LoginForm from "./Client/pages/Login/LoginForm";
 import "./App.css";
 import Profile from "./Client/pages/Profile/profile";

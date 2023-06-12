@@ -70,21 +70,21 @@ public class UserController {
     }
 
     @DeleteMapping("/delUser/{id}")
-    String deleteUser (@PathVariable int id){
-        if (!userReponsitory.existsById(id)) {
-            throw new UserNotFoundException(id);
-        }
-        userReponsitory.deleteById(id);
-        return "Deleted successfully";
-    }
-//    public ResponseEntity<?> deleteUser(@PathVariable int id){
-//        return userReponsitory.findById(id)
-//                .map(user1 -> {
-//                    user1.setUser_isActivity(Boolean.FALSE);
-//                    userReponsitory.save(user1);
-//                    return new ResponseEntity<>(new ReponseMessage("Delete user success"), HttpStatus.OK);
-//                }).orElseThrow(()->new UserNotFoundException(id));
-
+//    String deleteUser (@PathVariable int id){
+//        if (!userReponsitory.existsById(id)) {
+//            throw new UserNotFoundException(id);
+//        }
+//        userReponsitory.deleteById(id);
+//        return "Deleted successfully";
 //    }
+    public ResponseEntity<?> deleteUser(@PathVariable int id){
+        return userReponsitory.findById(id)
+                .map(user1 -> {
+                    user1.setUser_isActivity(Boolean.FALSE);
+                    userReponsitory.save(user1);
+                    return new ResponseEntity<>(new ReponseMessage("Disable user successfully"), HttpStatus.OK);
+                }).orElseThrow(()->new UserNotFoundException(id));
+
+    }
 
 }

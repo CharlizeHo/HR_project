@@ -17,3 +17,8 @@ text-align: center;
     background-color: rgb(253, 175, 30) !important;
     border-color: rgb(253, 175, 30) !important;
 }
+
+.search-icon{
+    margin: auto;
+    margin-left: -30px;
+}

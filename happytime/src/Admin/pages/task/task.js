@@ -23,6 +23,12 @@ export default function Task() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [customerQuery, setCustomerQuery] = useState("");
+  const [startDateFilter, setStartDateFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+
 
   const { id } = useParams();
   const { task, user } = userTask;
@@ -139,6 +145,9 @@ export default function Task() {
           role: selectedUser.role
         },
       });
+    } else if (e.target.name === "customer_name") {
+      setCustomerQuery(e.target.value);
+      setCurrentPage(1);
     } else {
       setuserTask({ ...userTask, [e.target.name]: e.target.value });
     }
@@ -156,12 +165,31 @@ export default function Task() {
     };
   }, [showSuccessMessage]);
 
+  const filteredTasks = tasks?.filter(
+    (task) =>
+      task?.task_name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      task?.customer.customerName.toLowerCase().includes(customerQuery.toLowerCase()) &&
+      (startDateFilter === '' || task?.task_start.includes(startDateFilter))
+  );
+
+  const indexOfLastTask = currentPage * rowsPerPage;
+  const indexOfFirstTask = indexOfLastTask - rowsPerPage;
+  const currentTasks = filteredTasks?.slice(indexOfFirstTask, indexOfLastTask);
+  const totalPages = Math.ceil(filteredTasks?.length / rowsPerPage);
+
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   return (
     <div className='container container-task'>
       <h2>Task Management</h2>
-      <div style={{ float: "right", marginBottom: "10px" }}>
-        <Link className='btn btn-add btn-primary' to="/admin/task/add">+Add</Link>
-      </div>
+
 
       {showSuccessMessage && (
         <div className="float-message success-message">
@@ -169,6 +197,42 @@ export default function Task() {
         </div>
       )}
 
+      <div className="search-container" style={{ marginTop: "30px" }}>
+        <div>
+          <label>Start Date: </label>
+          <input
+            type="date"
+            placeholder="Filter by start date"
+            value={startDateFilter}
+            onChange={(e) => setStartDateFilter(e.target.value)}
+            className="search-input mx-2"
+            style={{maxWidth: "190px"}}
+          />
+        </div>
+        <div style={{marginLeft: "-330px"}}> 
+          <input
+            type="text"
+            placeholder="Search by task name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className='search-input'
+          />
+          <i className="fa fa-search"></i>
+        </div>
+        <div  style={{marginLeft: "-310px"}}>
+          <input
+            type="text"
+            placeholder="Search by customer name"
+            value={customerQuery}
+            onChange={(e) => onInputChange(e)}
+            className="search-input"
+            name="customer_name"
+          />
+          <i className="fa fa-search"></i>
+        </div>
+
+        <Link className='btn btn-add btn-primary' to="/admin/task/add">+ <i class="fas fa-tasks"></i></Link>
+      </div>
 
       <table className="table table-striped table-hover shadow">
         <thead>
@@ -186,7 +250,7 @@ export default function Task() {
           </tr>
         </thead>
         <tbody>
-          {tasks?.map((task) => (
+          {currentTasks?.map((task) => (
             <tr key={task.task_id}>
               <td>{task?.task_id}</td>
               <td>{task?.task_name}</td>
@@ -197,21 +261,52 @@ export default function Task() {
               <td>{task?.extension_time}</td>
               <td>{task?.user_creTask.user_fullName}</td>
               <td>
-                <Link className="btn btn-edit btn-success mx-2" to={`/admin/task/edittask/${task?.task_id}`}>Edit</Link>/
-                <button type="button" className="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(task?.task_id)}>Delete</button>
+                <Link className="btn btn-edit btn-success mx-2" to={`/admin/task/edittask/${task?.task_id}`}><i className='fa fa-pen'></i></Link>/
+                <button type="button" className="btn btn-delete btn-danger mx-2" onClick={() => handleDeleteClick(task?.task_id)}><i className='fa fa-trash'></i></button>
               </td>
               <td>
-                <button className='btn btn-dotask btn-info' style={{ color: "#FFF" }} onClick={() => handleAssignClick(task?.task_id)}>Assign</button>
+                <button className='btn btn-dotask btn-info' style={{ color: "#FFF" }} onClick={() => handleAssignClick(task?.task_id)}><i className='fa fa-user-pen'></i></button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
+      <div className="pagination-container">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination justify-content-center">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={handlePrevPage} disabled={currentPage === 1}>
+                Previous
+              </button>
+            </li>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li
+                key={index + 1}
+                className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}
+              >
+                <button className="page-link" onClick={() => setCurrentPage(index + 1)}>
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button
+                className="page-link"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
       {showDeleteConfirmDialog && (
         <div className='modal-overlay'>
-          <div className='modal'>
-            <h3>Confirmation</h3>
+          <div className='modalContainer'>
+            <h3>Confirm</h3>
             <p>Are you sure you want to delete this task?</p>
             <div className='modal-buttons'>
               <button className='btn btn-delete btn-danger' onClick={handleConfirmDelete}>Delete</button>
@@ -273,11 +368,8 @@ export default function Task() {
       )}
 
       {showErrorMessage && (
-        <div className="float-message error-message">
-          {errorMessage}
-        </div>
+        <div className="float-message error-message">{errorMessage}</div>
       )}
-
     </div>
   );
 }

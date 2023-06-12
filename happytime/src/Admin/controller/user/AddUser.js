@@ -6,6 +6,8 @@ import './user_style.css'
 export default function AddUser() {
   const [departments, setDepartments] = useState(null)
   const [showPassword, setShowPassword] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(true);
+
 
   useEffect(() => {
     GetDepartment();
@@ -15,6 +17,18 @@ export default function AddUser() {
     const result = await axios.get("http://localhost:8080/Department/getDepartment")
     setDepartments(result.data);
   }
+
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/auth/UserCol/getUser");
+      const users = response.data;
+      const isUsernameTaken = users.some((user) => user.username === username);
+      setUsernameAvailable(!isUsernameTaken);
+    } catch (error) {
+      console.error("Error checking username availability:", error);
+    }
+  };
+
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -61,7 +75,12 @@ export default function AddUser() {
           departmentName: selectedDepartment.departmentName,
         },
       });
-    } else {
+    } else if (e.target.name === "userName") {
+      const enteredUsername = e.target.value;
+      setUser({ ...user, [e.target.name]: enteredUsername });
+      checkUsernameAvailability(enteredUsername);
+    }
+    else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
 
@@ -82,7 +101,7 @@ export default function AddUser() {
         navigate("/admin/user");
       } catch (error) {
         if (error.response && error.response.status === 500) {
-          alert('Duplicate phonenum. Please enter a different phonenum.');
+          alert('Error 500 (Please check if phone number or username is duplicated)');
         } else {
           alert('An error occurred. Please try again.');
         }
@@ -105,7 +124,7 @@ export default function AddUser() {
                   <input
                     type="text"
                     className="form-control text-center"
-                    placeholder="For example: Nguyễn Võ Hoàng"
+                    placeholder="For example: Nguyen Vo Hoang"
                     name="fullName"
                     value={fullName}
                     onChange={(e) => onInputChange(e)}
@@ -163,9 +182,9 @@ export default function AddUser() {
                     required
                   >
                     <option>Choose gender</option>
-                    <option value="1">Nam</option>
-                    <option value="2">Nữ</option>
-                    <option value="3">Khác</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Other</option>
                   </select>
                 </div>
 
@@ -197,7 +216,7 @@ export default function AddUser() {
                     onChange={(e) => onInputChange(e)}
                     required
                   >
-                    <option value="" disabled>Chọn phòng ban</option>
+                    <option value="" disabled>Choose department</option>
                     {departments?.map((list_department) => (
                       <option
                         key={list_department.id}
@@ -207,11 +226,11 @@ export default function AddUser() {
                       </option>
                     ))}
                   </select>
-                </div>             
+                </div>
               </div>
 
               <div className='col-md-12'>
-              <div className="mb-3">
+                <div className="mb-3">
                   <label htmlFor="address" className="form-label">
                     Address:
                   </label>
@@ -226,25 +245,30 @@ export default function AddUser() {
                   />
                 </div>
               </div>
-              
+
               <div className='col-md-6'>
-              <div className="mb-3">
+                <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username:
                   </label>
                   <input
                     type="text"
-                    className="form-control text-center"
+                    className={`form-control text-center ${usernameAvailable ? "" : "is-invalid"}`}
                     placeholder="For example: wbjn123"
                     name="userName"
                     value={userName}
                     onChange={(e) => onInputChange(e)}
                     required
                   />
+                  {!usernameAvailable && (
+                    <div className="invalid-feedback">
+                      Username is taken. Please try another one.
+                    </div>
+                  )}
                 </div>
               </div>
               <div className='col-md-6'>
-              <div className="mb-3 row" style={{ marginTop: "-16px" }}>
+                <div className="mb-3 row" style={{ marginTop: "-16px" }}>
                   <label htmlFor="password" className="col-form-label">
                     Password:
                   </label>

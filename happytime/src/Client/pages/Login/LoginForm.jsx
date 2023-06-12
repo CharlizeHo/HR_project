@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../components/common/logo.png";
+import logo from "../../Components/common/logo.png";
 import Validation from "./LoginValidation";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

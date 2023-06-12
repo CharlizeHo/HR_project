@@ -108,7 +108,7 @@ export default function EditUser() {
                 <div className="col-md-6 offset-md-3 border rounded p-4 shadow">
                     <h2 className="text-center">Edit User</h2>
                     <form onSubmit={(e) => onSubmit(e)} style={{ display: "block" }}>
-                        <div className="row justify-content-center mb-3">
+                        {/* <div className="row justify-content-center mb-3">
                             <label htmlFor="Activity" className="form-label col-12 text-center">
                                 State:
                             </label>
@@ -120,7 +120,7 @@ export default function EditUser() {
                                     onClick={(e) => switchActivity(e)}
                                 />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/*
 
