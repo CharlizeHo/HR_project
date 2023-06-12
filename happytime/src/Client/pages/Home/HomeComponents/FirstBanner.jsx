@@ -12,12 +12,12 @@ const FirstBanner = () => {
           <span className="grid-title">
             <i className="fa-sharp fa-solid fa-user"></i>
             <p style={{ fontWeight: "600", marginBottom: "5px" }}>
-              Nhân viên xuất sắc
+              Top employees
             </p>
           </span>
           <span>
-            <h4>10</h4>
-            <p>So với hôm qua (+2)</p>
+            <h4>5</h4>
+            <p>Yesterday (+2)</p>
           </span>
         </div>
         <div className="grid-items">
@@ -25,12 +25,12 @@ const FirstBanner = () => {
           <span className="grid-title">
             <i className="fa-sharp fa-solid fa-user"></i>
             <p style={{ fontWeight: "600", marginBottom: "5px" }}>
-              Nhân viên xuất sắc
+            Top employees
             </p>
           </span>
           <span>
-            <h4>10</h4>
-            <p>So với hôm qua (+2)</p>
+            <h4>5</h4>
+            <p>Yesterday (+2)</p>
           </span>
         </div>
         <div className="grid-items">
@@ -38,12 +38,12 @@ const FirstBanner = () => {
           <span className="grid-title">
             <i className="fa-sharp fa-solid fa-user"></i>
             <p style={{ fontWeight: "600", marginBottom: "5px" }}>
-              Nhân viên xuất sắc
+            Top employees
             </p>
           </span>
           <span>
-            <h4>10</h4>
-            <p>So với hôm qua (+2)</p>
+            <h4>5</h4>
+            <p>Yesterday (+2)</p>
           </span>
         </div>
         <div className="grid-items">
@@ -51,12 +51,12 @@ const FirstBanner = () => {
           <span className="grid-title">
             <i className="fa-sharp fa-solid fa-user"></i>
             <p style={{ fontWeight: "600", marginBottom: "5px" }}>
-              Nhân viên xuất sắc
+              Top employees
             </p>
           </span>
           <span>
-            <h4>10</h4>
-            <p>So với hôm qua (+2)</p>
+            <h4>5</h4>
+            <p>Yesterday (+2)</p>
           </span>
         </div>
       </div>

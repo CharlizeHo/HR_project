@@ -66,7 +66,6 @@ class App extends React.Component {
                 <Route path="/profile" index element={<Profile />} />
                 <Route path="/nhanvien" element={<ListNhanVien />} />
                 <Route path="/ListTask" element={<ListTask />} />
-                <Route path="/profile" element={<Profile />} />
               </Route>
 
               <Route
